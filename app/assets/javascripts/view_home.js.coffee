@@ -56,7 +56,7 @@ view_home.controller('HomeController', ['$scope', 'ajax', 'notice', ($scope, aja
       minutes = Math.round(($scope.current_checkpoint.getTime() - (new Date()).getTime()) / (1000 * 60))
       if minutes < 1
         if !$scope.expired
-          notice('Please end your trip or update it with a later ETA so we know you\'re safe.')
+          notice('Please end your trip or update your ETA so we know you\'re safe.')
         $scope.expired = true
       else
         $scope.expired = false
