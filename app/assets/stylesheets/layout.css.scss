@@ -45,6 +45,12 @@ body {
     color: inherit;
     text-decoration: inherit;
     font-weight: 600;
+    -webkit-transition-property: all;
+    -moz-transition-property:    all;
+    -ms-transition-property:     all;
+    -o-transition-property:      all;
+    transition-property:         all;
+    @include transition-duration(0.3s);
 
     &:hover {
       color: $anchor-color-hover;
@@ -136,21 +142,15 @@ body {
           background-repeat: no-repeat;
           background-origin: padding-box;
           background-image: image-url("logo.png");
-          -webkit-transition-property: color;
-          -moz-transition-property:    color;
-          -ms-transition-property:     color;
-          -o-transition-property:      color;
-          transition-property:         color;
-          @include transition-duration(0.5s);
 
           .title-kite {
-            color: #7e5165;
             -webkit-transition-property: color;
             -moz-transition-property:    color;
             -ms-transition-property:     color;
             -o-transition-property:      color;
             transition-property:         color;
-            @include transition-duration(0.5s);
+            @include transition-duration(0.3s);
+            color: #7e5165;
           }
 
           &:hover .title-kite {

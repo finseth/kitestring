@@ -27,6 +27,7 @@ body {
       }
 
       border-bottom: 1px solid #eee;
+      background-color: #fff;
 
       &:last-child {
         border-bottom: none;
@@ -89,7 +90,7 @@ body {
     -ms-transition-property:     background-color, color;
     -o-transition-property:      background-color, color;
     transition-property:         background-color, color;
-    @include transition-duration(0.5s);
+    @include transition-duration(0.3s);
     @include border-radius(2px);
 
     &:first-child:last-child {
@@ -159,7 +160,7 @@ body {
     -ms-transition-property:     background-color;
     -o-transition-property:      background-color;
     transition-property:         background-color;
-    @include transition-duration(0.5s);
+    @include transition-duration(0.3s);
     @include border-radius(2px);
     border-style: none;
     background-color: #bc2f64;

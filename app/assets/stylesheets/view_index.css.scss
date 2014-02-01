@@ -77,12 +77,10 @@
         border: 1px solid #fff;
         text-transform: uppercase;
         @include border-radius(2px);
-        -webkit-transition-property: color;
-        -moz-transition-property:    color;
-        -ms-transition-property:     color;
-        -o-transition-property:      color;
-        transition-property:         color;
-        @include transition-duration(0.5s);
+
+        &:hover {
+          border: 1px solid $anchor-color-hover;
+        }
 
         @media (max-width: 640px) {
           font-size: 1.5em;
