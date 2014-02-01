@@ -253,12 +253,12 @@ class HomeController < ApplicationController
 
   def twilio
     phone = normalize_phone(params['From'])
-    body = params['Body'].strip()
+    body = params['Body'].strip().downcase()
     now = Time.zone.now
     user = User.find_by phone: phone
     if user
       if user.checkpoint
-        if body =~ /[1-9]\d*m(in|inute)?s?/
+        if body =~ /[1-9]\d*\s*m(in|inute)?s?/
           num = body.scan(/\d+/)[0].to_i
           user.checkpoint = Time.zone.now + num.minutes
           user.pinged = false
@@ -273,7 +273,7 @@ class HomeController < ApplicationController
           end
           return render :xml => twiml.text
         end
-        if body =~ /[1-9]\d*h(r|our)?s?/
+        if body =~ /[1-9]\d*\s*h(r|our)?s?/
           num = body.scan(/\d+/)[0].to_i
           user.checkpoint = Time.zone.now + num.hours
           user.pinged = false
