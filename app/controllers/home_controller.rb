@@ -14,7 +14,7 @@ class HomeController < ApplicationController
 
   def index
     if session[:authenticated_user_id]
-      return redirect_to '/home' 
+      return redirect_to '/home'
     end
   end
 
@@ -312,7 +312,7 @@ private
 
   # normalize a phone number
   def normalize_phone(phone)
-    phone = phone.strip.gsub(/[-+()]/, '')
+    phone = phone.strip.gsub(/[-+() ]/, '')
     if phone == '' || phone.gsub(/[0-9]/, '') != ''
       return nil
     end
