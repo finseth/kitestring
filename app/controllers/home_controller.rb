@@ -294,22 +294,16 @@ class HomeController < ApplicationController
           end
           return render :xml => twiml.text
         end
-        if now > user.checkpoint - 30.seconds
-          if user.pinged == true
-            if user.responded == false
-              user.message = nil
-              user.checkpoint = nil
-              user.pinged = nil
-              user.responded = nil
-              user.alerted = nil
-              user.save
-              twiml = Twilio::TwiML::Response.new do |r|
-                r.Message 'Thanks!  Your trip has been ended.'
-              end
-              return render :xml => twiml.text
-            end
-          end
+        user.message = nil
+        user.checkpoint = nil
+        user.pinged = nil
+        user.responded = nil
+        user.alerted = nil
+        user.save
+        twiml = Twilio::TwiML::Response.new do |r|
+          r.Message 'Thanks!  Your trip has been ended.'
         end
+        return render :xml => twiml.text
       end
     end
     return render :text => ''
