@@ -15,7 +15,7 @@
 <div data-ng-controller="HomeController">
   <div class="dark-gray-vessel slide" data-ng-show="active">
     <div class="container">
-      <div class="row dark-gray-row">
+      <div class="row main-row">
         <div class="span6 offset3">
           <h2 class="no-top-margin"><i class="fa fa-rocket"></i> Your Current Trip</h2>
           <p id="current-message">{{ current_message }}</p>
@@ -25,9 +25,10 @@
       </div>
     </div>
   </div>
+
   <div class="gray-vessel slide" data-ng-show="contacts.length > 0">
     <div class="container">
-      <div class="row gray-row">
+      <div class="row main-row">
         <div class="span6 offset3">
           <%= form_tag('/checkpoint', { 'method' => 'post', 'class' => 'no-vertical-margin', 'data-ks-form' => 'updateCurrentCheckpointFromServer' }) do %>
             <h2 class="no-top-margin" data-ng-show="active"><i class="fa fa-clock-o"></i> Update your trip</h2>
@@ -43,17 +44,20 @@
               <a href="#" class="button" data-ng-click="checkpointIn($event, 120)">2hr</a>
             </p>
             <p>If you don&rsquo;t respond within 5 minutes of recieving our ping, we&rsquo;ll send the following message to your emergency contacts:</p>
-            <p><textarea name="message" data-ng-model="message" class="full-width"></textarea></p>
-            <p class="no-bottom-margin">
+            <div class="small-p">
+              <textarea name="message" data-ng-model="message" class="full-width"></textarea>
+            </div>
+            <div class="small-p no-bottom-margin">
               <input name="time_utc" type="hidden" value="{{ time_utc }}" />
               <input type="submit" data-ng-show="active" class="button" value="Update trip" />
               <input type="submit" data-ng-hide="active" class="button" value="Embark" />
-            </p>
+            </div>
           </div>
         <% end %>
       </div>
     </div>
   </div>
+
   <div class="container">
     <div class="row main-row">
       <div class="span6 offset3">
@@ -87,7 +91,9 @@
       </div>
     </div>
   </div>
+
   <hr />
+
   <div class="container">
     <div class="row main-row">
       <div class="span6 offset3">

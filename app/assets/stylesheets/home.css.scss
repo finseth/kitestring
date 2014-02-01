@@ -55,11 +55,7 @@ body {
   }
 
   .main-row {
-    margin: 48px 0;
-  }
-
-  .gray-row, .dark-gray-row {
-    margin: 32px 0;
+    margin: 40px 0;
   }
 
   .gray-vessel {
@@ -73,6 +69,7 @@ body {
 
   .dark-gray-vessel {
     background-color: #ddd;
+    color: #333;
     overflow: auto; /* creates new block formatting context to contain margins of nested elements */
     
     textarea, input:not([type=submit]) {
