@@ -258,25 +258,33 @@ class HomeController < ApplicationController
     user = User.find_by phone: phone
     if user
       if user.checkpoint
-        if body =~ /\d+m(in)?/
+        if body =~ /[1-9]\d*m(in)?/
           num = body.scan(/\d+/)[0].to_i
-          user.checkpoint += num.minutes
+          user.checkpoint = Time.zone.now + num.minutes
           user.pinged = false
           user.alerted = false
           user.save
           twiml = Twilio::TwiML::Response.new do |r|
-            r.Message 'Thanks!  Your ETA has been extended by ' + num.to_s + ' minutes.'
+            if num == 1
+              r.Message 'Thanks!  Your ETA has been extended by ' + num.to_s + ' minute.'
+            else
+              r.Message 'Thanks!  Your ETA has been extended by ' + num.to_s + ' minutes.'
+            end
           end
           return render :xml => twiml.text
         end
-        if body =~ /\d+h(r|our)?s?/
+        if body =~ /[1-9]\d*h(r|our)?s?/
           num = body.scan(/\d+/)[0].to_i
-          user.checkpoint += num.hours
+          user.checkpoint = Time.zone.now + num.hours
           user.pinged = false
           user.alerted = false
           user.save
           twiml = Twilio::TwiML::Response.new do |r|
-            r.Message 'Thanks!  Your ETA has been extended by ' + num.to_s + ' hours.'
+            if num == 1
+              r.Message 'Thanks!  Your ETA has been extended by ' + num.to_s + ' hour.'
+            else
+              r.Message 'Thanks!  Your ETA has been extended by ' + num.to_s + ' hours.'
+            end
           end
           return render :xml => twiml.text
         end
