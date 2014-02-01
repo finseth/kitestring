@@ -261,6 +261,7 @@ class HomeController < ApplicationController
         if body =~ /\d+m(in)?/
           num = body.scan(/\d+/)[0].to_i
           user.checkpoint += num.minutes
+          user.pinged = false
           user.alerted = false
           user.save
           twiml = Twilio::TwiML::Response.new do |r|
@@ -271,6 +272,7 @@ class HomeController < ApplicationController
         if body =~ /\d+h(r|our)?s?/
           num = body.scan(/\d+/)[0].to_i
           user.checkpoint += num.hours
+          user.pinged = false
           user.alerted = false
           user.save
           twiml = Twilio::TwiML::Response.new do |r|
