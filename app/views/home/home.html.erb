@@ -63,8 +63,8 @@
           <span data-ng-show="contacts.length == 0">Add an emergency contact</span>
         </h2>
         <p data-ng-show="contacts.length == 0">If you go dark, we&rsquo;ll send a customizable alert to your emergency contacts. To get started, add an emergency contact below.</p>
-        <p data-ng-show="contacts.length == 1">If you go dark, we&rsquo;ll alert the emergency contact listed here:</p>
-        <p data-ng-show="contacts.length > 1">If you go dark, we&rsquo;ll alert the emergency contacts listed here:</p>
+        <p data-ng-show="contacts.length == 1">If you don&rsquo;t respond within 5 minutes of recieving our ping, we&rsquo;ll alert the emergency contact listed here:</p>
+        <p data-ng-show="contacts.length > 1">If you don&rsquo;t respond within 5 minutes of recieving our ping, we&rsquo;ll alert the emergency contacts listed here:</p>
         <div class="p full-width">
           <table data-ng-show="contacts.length > 0" class="no-vertical-margin">
             <tr data-ng-repeat="contact in contacts">

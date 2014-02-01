@@ -24,12 +24,15 @@ form.directive('ksPostAnchor', ['ajax', (ajax) ->
     link: (scope, element, attrs) ->
       element.click (event) ->
         event.preventDefault()
-        event.stopPropagation()
-        ajax {
-          url: $(this).attr('href'),
-          type: 'post',
-          success: scope[attrs['ksPostAnchor']],
-          scope: scope
-        }
+        if !element.hasClass('disabled')
+          element.addClass('disabled')
+          event.stopPropagation()
+          ajax {
+            url: $(this).attr('href'),
+            type: 'post',
+            success: scope[attrs['ksPostAnchor']],
+            complete: (() -> element.removeClass('disabled')),
+            scope: scope
+          }
   }
 ])
