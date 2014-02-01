@@ -72,10 +72,10 @@
               <td>{{ contact.name }}</td>
               <td>{{ contact.phone }}</td>
               <td data-ng-show="contacts.length > 1">
-                <a href="/move_contact_up/{{ contact.id }}" data-ng-show="!$first" data-ks-post-anchor="move_contact_up"><i class="fa fa-caret-up"></i></a>
-                <a href="/move_contact_down/{{ contact.id }}" data-ng-show="!$last" data-ks-post-anchor="move_contact_down"><i class="fa fa-caret-down"></i></a>
+                <a class="icon-link" href="/move_contact_up/{{ contact.id }}" data-ng-show="!$first" data-ks-post-anchor="move_contact_up"><i class="fa fa-caret-up"></i></a>
+                <a class="icon-link" href="/move_contact_down/{{ contact.id }}" data-ng-show="!$last" data-ks-post-anchor="move_contact_down"><i class="fa fa-caret-down"></i></a>
               </td>
-              <td><a href="/delete_contact/{{ contact.id }}" data-ks-post-anchor="delete_contact"><i class="fa fa-trash-o"></i></a></td>
+              <td><a class="icon-link" href="/delete_contact/{{ contact.id }}" data-ks-post-anchor="delete_contact"><i class="fa fa-trash-o"></i></a></td>
             </tr>
           </table>
         </div>
