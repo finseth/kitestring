@@ -17,10 +17,10 @@
     background-position: left top;
     background-repeat: repeat-x;
     background-image: image-url("clouds.png");
-    -webkit-animation: moving-images 30s linear infinite;
-       -moz-animation: moving-images 30s linear infinite;
-         -o-animation: moving-images 30s linear infinite;
-            animation: moving-images 30s linear infinite;
+    -webkit-animation: moving-images-left 80s linear infinite;
+       -moz-animation: moving-images-left 80s linear infinite;
+         -o-animation: moving-images-left 80s linear infinite;
+            animation: moving-images-left 80s linear infinite;
   }
 
   #hero-buildings {
@@ -33,10 +33,10 @@
     background-position: left top;
     background-repeat: repeat-x;
     background-image: image-url("buildings.png");
-    -webkit-animation: moving-images 10s linear infinite;
-       -moz-animation: moving-images 10s linear infinite;
-         -o-animation: moving-images 10s linear infinite;
-            animation: moving-images 10s linear infinite;
+    -webkit-animation: moving-images-right 80s linear infinite;
+       -moz-animation: moving-images-right 80s linear infinite;
+         -o-animation: moving-images-right 80s linear infinite;
+            animation: moving-images-right 80s linear infinite;
   }
 
   #hero-heading-vessel {
@@ -91,19 +91,36 @@
   }
 }
 
-@keyframes moving-images {
+@keyframes moving-images-left {
   0%   { left: 0; }
   100% { left: -800px; }
 }
-@-moz-keyframes moving-images {
+@-moz-keyframes moving-images-left {
   0%   { left: 0; }
   100% { left: -800px; }
 }
-@-webkit-keyframes moving-images {
+@-webkit-keyframes moving-images-left {
   0%   { left: 0; }
   100% { left: -800px; }
 }
-@-o-keyframes moving-images {
+@-o-keyframes moving-images-left {
   0%   { left: 0; }
   100% { left: -800px; }
+}
+
+@keyframes moving-images-right {
+  0%   { left: -800px; }
+  100% { left: 0; }
+}
+@-moz-keyframes moving-images-right {
+  0%   { left: -800px; }
+  100% { left: 0; }
+}
+@-webkit-keyframes moving-images-right {
+  0%   { left: -800px; }
+  100% { left: 0; }
+}
+@-o-keyframes moving-images-right {
+  0%   { left: -800px; }
+  100% { left: 0; }
 }
