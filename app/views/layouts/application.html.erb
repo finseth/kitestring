@@ -1,14 +1,75 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <title>Kitestring</title>
-  <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
-  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
-
-<%= yield %>
-
-</body>
+<html data-ng-app="kitestring">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="<%= content_for :description %>">
+    <title><%= content_for :title %></title>
+    <%= stylesheet_link_tag    "application", media: "all" %>
+    <%= javascript_include_tag "application" %>
+    <script>
+      <% if flash[:notices] %>
+        window.flash_notices = <%= flash[:notices].to_json.html_safe -%>;
+      <% else %>
+        window.flash_notices = [];
+      <% end %>
+    </script>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300,400,600' rel='stylesheet' type='text/css'>
+    <%= csrf_meta_tags %>
+  </head>
+  <body>
+    <div id="notice-vessel-spacer" data-ng-controller="NoticeController">
+      <div class="container">
+        <div class="notice slide" data-ng-repeat="msg in notices">
+          <div class="notice-spacer"></div>
+          <div>
+            <span data-ng-bind-html="msg"></span>
+            <a class="notice-close" href="#">
+              <i class="fa fa-times"></i>
+            </a>
+          </div>
+          <div class="notice-spacer"></div>
+        </div>
+      </div>
+    </div>
+    <div id="notice-vessel" data-ng-controller="NoticeController">
+      <div class="container">
+        <div class="notice slide" data-ng-repeat="msg in notices">
+          <div class="notice-spacer"></div>
+          <div>
+            <span data-ng-bind-html="msg"></span>
+            <a class="notice-close" href="#" data-ng-click="close($event, $index)">
+              <i class="fa fa-times"></i>
+            </a>
+          </div>
+          <div class="notice-spacer"></div>
+        </div>
+      </div>
+    </div>
+    <div id="header-vessel">
+      <div class="container" id="header">
+        <div class="clearfix">
+          <h1><a href="/"><span class="title-kite">Kite</span>string</a></h1>
+          <div id="nav">
+            <% if session[:authenticated_user_id] == nil %>
+              <% if current_page?(controller: 'home', action: 'index') %>
+                <a href="#sign_in_form" ks-named-anchor><i class="fa fa-sign-in"></i> Sign in</a>
+              <% end %>
+            <% else %>
+              <a href="/sign_out" ks-post-anchor><i class="fa fa-sign-out"></i> Sign out</a>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="content-vessel">
+      <%= yield %>
+    </div>
+    <div id="footer-vessel">
+      <div class="container" id="footer">
+        <div class="small-p">&copy; <%= Time.new.year %> <a href="/">Kitestring</a>.  All rights reserved.</div>
+        <div class="small-p"><a href="/terms">Terms of Service</a> | <a href="/privacy">Privacy Policy</a> | <a href="mailto:contact@kitestring.io">Contact</a></div>
+      </div>
+    </div>
+  </body>
 </html>

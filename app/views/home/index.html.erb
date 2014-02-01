@@ -1,0 +1,49 @@
+<% content_for :title, "Kitestring" %>
+<% content_for :description, "Keep tabs on your well-being." %>
+
+<div id="hero">
+  <div id="hero-clouds"></div>
+  <div id="hero-buildings"></div>
+  <div class="container" id="hero-heading-vessel">
+    <div id="hero-heading"><%= image_tag("logo.png") -%></div>
+    <div id="hero-subheading">Keep tabs on your well-being.</div>
+    <div id="hero-call-to-action"><a id="call-to-action" href="#sign_up_form" ks-named-anchor>Get started <i class="fa fa-angle-double-right"></i></a></div>
+  </div>
+</div>
+
+<div class="gray-vessel">
+  <div class="container">
+    <div class="row gray-row">
+      <div class="span4 offset2">
+        <h2 class="no-top-margin"><i class="fa fa-cogs"></i> How it works</h2>
+        <p class="no-bottom-margin">When you embark on an unsafe journey, let us know your ETA. Check in when your trip is over so we know you&rsquo;re safe and sound.</p>
+      </div>
+      <div class="span4">
+        <h2 class="no-top-margin"><i class="fa fa-shield"></i> Stay connected</h2>
+        <p class="no-bottom-margin">
+          If you go dark, we&rsquo;ll text your emergency contacts until someone responds. You can set a personalized alert message for each trip.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row main-row">
+    <div class="span4 offset2">
+      <%= form_tag('/send_verification', { 'method' => 'post', 'id' => 'sign_up_form', 'class' => 'no-vertical-margin', 'data-ks-form' => '' }) do %>
+        <h2 class="no-top-margin"><i class="fa fa-rocket"></i> Sign up</h2>
+        <div class="small-p"><input name="name" class="focus-target full-width" type="text" placeholder="Full Name" /></div>
+        <div class="small-p"><input name="phone" class="full-width" type="tel" placeholder="Phone number" /></div>
+        <div class="small-p no-bottom-margin"><input type="submit" class="button" value="Sign up" /></div>
+      <% end %>
+    </div>
+    <div class="span4">
+      <%= form_tag('/sign_in', { 'method' => 'post', 'id' => 'sign_in_form', 'class' => 'no-vertical-margin', 'data-ks-form' => '' }) do %>
+        <h2 class="no-top-margin"><i class="fa fa-sign-in"></i> Sign in</h2>
+        <div class="small-p"><input name="phone" class="focus-target full-width" type="tel" placeholder="Phone number" /></div>
+        <div class="small-p"><input name="password" class="full-width" type="password" placeholder="Password" /></div>
+        <div class="small-p no-bottom-margin"><input type="submit" class="button" value="Sign in" /></div>
+      <% end %>
+    </div>
+  </div>
+</div>

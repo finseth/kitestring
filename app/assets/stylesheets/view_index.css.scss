@@ -1,0 +1,111 @@
+@import 'constants';
+
+#hero {
+  height: 569px;
+  position: relative;
+  background-color: #221f30;
+  color: #ccc;
+  overflow: hidden;
+
+  #hero-clouds {
+    z-index: 5;
+    position: absolute;
+    left: 0px;
+    top: 50px;
+    right: 0px;
+    height: 317px;
+    background-position: left top;
+    background-repeat: repeat-x;
+    background-image: image-url("clouds.png");
+    -webkit-animation: moving-images 30s linear infinite;
+       -moz-animation: moving-images 30s linear infinite;
+         -o-animation: moving-images 30s linear infinite;
+            animation: moving-images 30s linear infinite;
+  }
+
+  #hero-buildings {
+    z-index: 5;
+    position: absolute;
+    left: 0px;
+    top: 417px;
+    right: 0px;
+    height: 152px;
+    background-position: left top;
+    background-repeat: repeat-x;
+    background-image: image-url("buildings.png");
+    -webkit-animation: moving-images 10s linear infinite;
+       -moz-animation: moving-images 10s linear infinite;
+         -o-animation: moving-images 10s linear infinite;
+            animation: moving-images 10s linear infinite;
+  }
+
+  #hero-heading-vessel {
+    z-index: 10;
+    text-align: center;
+    position: relative;
+    top: 0;
+    left: 0;
+    text-shadow: 2px 2px 1px #000;
+
+    #hero-heading {
+      img {
+        width: 300px;
+        height: 300px;
+      }
+
+      @media (max-width: 1280px) {
+        margin-top: 20px;
+      }
+    }
+
+    #hero-subheading {
+      margin-top: -50px;
+      font-size: 2em;
+
+      @media (max-width: 1280px) {
+        font-size: 1.5em;
+      }
+    }
+
+    #hero-call-to-action {
+      margin-top: 64px;
+
+      #call-to-action {
+        font-weight: 300;
+        font-size: 2em;
+        padding: 20px 40px;
+        border: 1px solid #fff;
+        text-transform: uppercase;
+        @include border-radius(2px);
+        -webkit-transition-property: color;
+        -moz-transition-property:    color;
+        -ms-transition-property:     color;
+        -o-transition-property:      color;
+        transition-property:         color;
+        @include transition-duration(0.5s);
+
+        @media (max-width: 640px) {
+          font-size: 1.5em;
+          padding: 15px 30px;
+        }
+      }
+    }
+  }
+}
+
+@keyframes moving-images {
+  0%   { left: 0; }
+  100% { left: -800px; }
+}
+@-moz-keyframes moving-images {
+  0%   { left: 0; }
+  100% { left: -800px; }
+}
+@-webkit-keyframes moving-images {
+  0%   { left: 0; }
+  100% { left: -800px; }
+}
+@-o-keyframes moving-images {
+  0%   { left: 0; }
+  100% { left: -800px; }
+}

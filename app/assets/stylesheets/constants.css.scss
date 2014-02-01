@@ -1,0 +1,37 @@
+$anchor-color-hover: #942356;
+$paragraph-margin: 20px;
+$header-height: 48px;
+$footer-height: 110px;
+$input-height: 40px;
+
+@mixin box-shadow($x, $y, $blur, $spread, $color, $inset) {
+  @if $inset {
+    -webkit-box-shadow: $x $y $blur $spread $color inset;
+    -moz-box-shadow:    $x $y $blur $spread $color inset;
+    -ms-box-shadow:     $x $y $blur $spread $color inset;
+    -o-box-shadow:      $x $y $blur $spread $color inset;
+    box-shadow:         $x $y $blur $spread $color inset;
+  } @else {
+    -webkit-box-shadow: $x $y $blur $spread $color;
+    -moz-box-shadow:    $x $y $blur $spread $color;
+    -ms-box-shadow:     $x $y $blur $spread $color;
+    -o-box-shadow:      $x $y $blur $spread $color;
+    box-shadow:         $x $y $blur $spread $color;
+  }
+}
+
+@mixin border-radius($radius) {
+  -webkit-border-radius: $radius;
+  -moz-border-radius:    $radius;
+  -ms-border-radius:     $radius;
+  -o-border-radius:      $radius;
+  border-radius:         $radius;
+}
+
+@mixin transition-duration($duration) {
+  -webkit-transition-duration: $duration;
+  -moz-transition-duration:    $duration;
+  -ms-transition-duration:     $duration;
+  -o-transition-duration:      $duration;
+  transition-duration:         $duration;
+}

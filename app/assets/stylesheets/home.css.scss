@@ -1,0 +1,191 @@
+@import 'constants';
+
+body {
+
+  h2 {
+    font-weight: 300;
+    font-size: 1.7em;
+    color: #333;
+    margin: $paragraph-margin 0;
+  }
+
+  h3 {
+    font-weight: 400;
+    font-size: 1.2em;
+    color: #333;
+    margin: $paragraph-margin 0;
+  }
+
+  strong {
+    font-weight: 400;
+  }
+
+  table {
+    tr {
+      td {
+        padding: 8px 16px;
+      }
+
+      border-bottom: 1px solid #eee;
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      &:hover {
+        background-color: #eee;
+      }
+    }
+  }
+
+  .full-width {
+    width: 100%;
+    overflow: auto;
+  }
+
+  .center {
+    text-align: center;
+  }
+
+  .main-row {
+    margin: 48px 0;
+  }
+
+  .gray-row, .dark-gray-row {
+    margin: 32px 0;
+  }
+
+  .gray-vessel {
+    background-color: #eee;
+    overflow: auto; /* creates new block formatting context to contain margins of nested elements */
+    
+    textarea, input:not([type=submit]) {
+      background-color: #fff;
+    }
+  }
+
+  .dark-gray-vessel {
+    background-color: #ddd;
+    overflow: auto; /* creates new block formatting context to contain margins of nested elements */
+    
+    textarea, input:not([type=submit]) {
+      background-color: #fff;
+    }
+  }
+
+  textarea, input:not([type=submit]) {
+    display: inline-block;
+    vertical-align: middle;
+    border-left: 4px solid #bc2f64;
+    border-right: none;
+    border-top: none;
+    border-bottom: none;
+    background-color: #eee;
+    padding: 8px 12px;
+    margin: 2px 0;
+    color: #666;
+    -webkit-transition-property: background-color, color;
+    -moz-transition-property:    background-color, color;
+    -ms-transition-property:     background-color, color;
+    -o-transition-property:      background-color, color;
+    transition-property:         background-color, color;
+    @include transition-duration(0.5s);
+    @include border-radius(2px);
+
+    &:first-child:last-child {
+      margin: 0;
+    }
+
+    $placeholder-color: #999;
+    &::-webkit-input-placeholder {
+      color: $placeholder-color;
+      opacity: 1;
+    }
+    &:-moz-placeholder {
+      color: $placeholder-color;
+    }
+    &::-moz-placeholder {
+      color: $placeholder-color;
+      opacity: 1;
+    }
+    &:-ms-input-placeholder {
+      color: $placeholder-color;
+    }
+
+    &:focus {
+      color: #666;
+      background-color: #fff6cd;
+
+      $placeholder-color: #c2bda8;
+      &::-webkit-input-placeholder {
+        color: $placeholder-color;
+        opacity: 1;
+      }
+      &:-moz-placeholder {
+        color: $placeholder-color;
+      }
+      &::-moz-placeholder {
+        color: $placeholder-color;
+        opacity: 1;
+      }
+      &:-ms-input-placeholder {
+        color: $placeholder-color;
+      }
+    }
+
+    &:disabled {
+      @include box-shadow(0px, 2px, 3px, 0px, #ddd, true);
+      background-color: #eee;
+      color: #aaa;
+    }
+  }
+
+  input:not([type=submit]) {
+    max-width: 300px;
+  }
+
+  textarea {
+    resize: none;
+    height: 100px;
+  }
+
+  .button, a.button {
+    display: inline-block;
+    vertical-align: middle;
+    font-weight: 300;
+    text-transform: uppercase;
+    -webkit-transition-property: background-color;
+    -moz-transition-property:    background-color;
+    -ms-transition-property:     background-color;
+    -o-transition-property:      background-color;
+    transition-property:         background-color;
+    @include transition-duration(0.5s);
+    @include border-radius(2px);
+    border-style: none;
+    background-color: #bc2f64;
+    padding: 8px 12px;
+    margin: 2px 0;
+    color: #ffe8f3;
+    cursor: pointer;
+
+    &:first-child:last-child {
+      margin: 0;
+    }
+
+    &:hover {
+      background-color: #862052;
+      color: #f1dbe6;
+    }
+
+    &.disabled {
+      cursor: default;
+      background-color: #794e66;
+      color: #d5bdd3;
+    }
+  }
+
+  input, .button {
+    height: $input-height;
+  }
+
+}

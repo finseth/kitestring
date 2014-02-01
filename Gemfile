@@ -3,8 +3,14 @@ source 'https://rubygems.org'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.2'
 
-# Use sqlite3 as the database for Active Record
-gem 'sqlite3'
+group :production do
+  # Use pg as the database for Active Record
+  gem 'pg'
+end
+group :development, :test do
+  # Use sqlite3 as the database for Active Record
+  gem 'sqlite3'
+end
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
@@ -36,10 +42,22 @@ end
 # gem 'bcrypt-ruby', '~> 3.1.2'
 
 # Use unicorn as the app server
-# gem 'unicorn'
+gem 'unicorn'
 
 # Use Capistrano for deployment
 # gem 'capistrano', group: :development
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]
+
+# needed for Heroku
+gem 'rails_12factor', group: :production
+
+# use Ruby 2.0.0
+ruby '2.0.0'
+
+# Font Awesome
+gem 'font-awesome-sass'
+
+# Twilio
+gem 'twilio-ruby'

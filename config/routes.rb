@@ -1,4 +1,27 @@
 Kitestring::Application.routes.draw do
+  root to: 'home#index'
+  get '/terms' => 'home#terms'
+  get '/privacy' => 'home#privacy'
+  get '/home' => 'home#home'
+
+  post '/send_verification' => 'home#send_verification'
+  get '/verify/:name/:phone' => 'home#verify'
+  post '/new_user' => 'home#new_user'
+
+  post '/sign_in' => 'home#sign_in'
+  post '/sign_out' => 'home#sign_out'
+
+  post '/new_contact' => 'home#new_contact'
+  post '/delete_contact/:id' => 'home#delete_contact'
+  post '/move_contact_up/:id' => 'home#move_contact_up'
+  post '/move_contact_down/:id' => 'home#move_contact_down'
+  post '/checkpoint' => 'home#checkpoint'
+  post '/end_checkpoint' => 'home#end_checkpoint'
+  post '/status' => 'home#status'
+
+  get 'update' => 'home#update'
+  post 'twilio' => 'home#twilio'
+  
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
