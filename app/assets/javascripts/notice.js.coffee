@@ -6,6 +6,13 @@ notice.controller('NoticeController', ['$scope', 'notices', ($scope, notices) ->
   $scope.notices = notices
   window.notices = notices
 
+  $('body').keyup((e) ->
+    if e.which == 27
+      if notices.length > 0
+        $scope.$apply () ->
+          notices.splice(0, notices.length)
+  )
+
   $scope.close = (event, notice_id) ->
     $scope.notices.splice(notice_id, 1)
     event.preventDefault()
