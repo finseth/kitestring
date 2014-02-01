@@ -23,7 +23,7 @@
         <div class="notice slide" data-ng-repeat="msg in notices">
           <div class="notice-spacer"></div>
           <div>
-            <span data-ng-bind-html="msg"></span>
+            <span compile="msg"></span>
             <a class="notice-close" href="#">
               <i class="fa fa-times"></i>
             </a>
@@ -37,7 +37,7 @@
         <div class="notice slide" data-ng-repeat="msg in notices">
           <div class="notice-spacer"></div>
           <div>
-            <span data-ng-bind-html="msg"></span>
+            <span compile="msg"></span>
             <a class="notice-close" href="#" data-ng-click="close($event, $index)">
               <i class="fa fa-times"></i>
             </a>

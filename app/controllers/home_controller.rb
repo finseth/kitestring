@@ -207,6 +207,13 @@ class HomeController < ApplicationController
     end
   end
 
+  def delete_account
+    @user.destroy
+    session[:authenticated_user_id] = nil
+    notice('Your account has been deleted.')
+    return render :json => { :success => true, :location => '/' }
+  end
+
   def update
     now = Time.zone.now
     twilio = Twilio::REST::Client.new TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN

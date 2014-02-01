@@ -2,7 +2,7 @@
 $ -> FastClick.attach(document.body)
 
 # application module
-kitestring = angular.module('kitestring', ['notice', 'slide', 'form', 'anchor', 'view_index', 'view_home'])
+kitestring = angular.module('kitestring', ['notice', 'slide', 'compile', 'form', 'anchor', 'view_index', 'view_home'])
 
 kitestring.run(['notice', (notice) ->
   $('.focus-now').focus()

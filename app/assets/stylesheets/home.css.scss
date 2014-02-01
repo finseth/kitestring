@@ -16,6 +16,12 @@ body {
     margin: $paragraph-margin 0;
   }
 
+  hr {
+    border: none;
+    border-top: 1px solid #eee;
+    margin: 0;
+  }
+
   strong {
     font-weight: 400;
   }

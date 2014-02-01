@@ -19,6 +19,8 @@ Kitestring::Application.routes.draw do
   post '/end_checkpoint' => 'home#end_checkpoint'
   post '/status' => 'home#status'
 
+  post '/delete_account' => 'home#delete_account'
+
   get 'update' => 'home#update'
   post 'twilio' => 'home#twilio'
   

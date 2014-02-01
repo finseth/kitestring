@@ -144,4 +144,11 @@ view_home.controller('HomeController', ['$scope', 'ajax', 'notice', ($scope, aja
     $scope.contact_name = ''
     $scope.contact_phone = ''
     $('*').blur()
+
+  # account
+
+  $scope.delete_account = (event) ->
+    notice('We&rsquo;re sad to see you go! Click <a href="/delete_account" ks-post-anchor>here</a> to delete your account.')
+    event.preventDefault()
+    event.stopPropagation()
 ])

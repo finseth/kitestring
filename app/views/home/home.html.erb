@@ -20,7 +20,7 @@
           <h2 class="no-top-margin"><i class="fa fa-rocket"></i> Your Current Trip</h2>
           <p id="current-message">{{ current_message }}</p>
           <p><strong>ETA:</strong> <span ng-class="{'expired': expired}">{{ time_string }} ({{ interval_string }})</span></p>
-          <p class="no-bottom-margin"><a href="/end_checkpoint" class="button" ks-post-anchor="updateCurrentCheckpointFromServer">End Trip</a></p>
+          <p class="no-bottom-margin"><a href="/end_checkpoint" class="button" ks-post-anchor="updateCurrentCheckpointFromServer">End trip</a></p>
         </div>
       </div>
     </div>
@@ -82,8 +82,22 @@
         <%= form_tag('/new_contact', { 'method' => 'post', 'class' => 'no-bottom-margin', 'data-ks-form' => 'new_contact' }) do %>
           <div class="small-p no-top-margin"><input name="name" class="full-width" data-ng-model="contact_name" placeholder="Name" type="text" /></div>
           <div class="small-p"><input name="phone" class="full-width" data-ng-model="contact_phone" placeholder="Phone Number" type="tel" /></div>
-          <div class="small-p no-bottom-margin"><input type="submit" class="button" value="Add Contact" /></div>
+          <div class="small-p no-bottom-margin"><input type="submit" class="button" value="Add contact" /></div>
         <% end %>
+      </div>
+    </div>
+  </div>
+  <hr />
+  <div class="container">
+    <div class="row main-row">
+      <div class="span6 offset3">
+        <h2 class="no-top-margin">
+          <i class="fa fa-home"></i>
+          Account
+        </h2>
+        <div class="small-p">Full name: <strong><%= @user.name -%></strong></div>
+        <div class="small-p">Phone number: <strong><%= @user.phone -%></strong></div>
+        <div class="p"><a href="#" class="button" data-ng-click="delete_account($event)">Delete account</a></div>
       </div>
     </div>
   </div>
