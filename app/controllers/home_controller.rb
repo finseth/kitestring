@@ -11,6 +11,7 @@ class HomeController < ApplicationController
   public_actions = [:index, :terms, :privacy, :send_verification, :verify, :new_user, :sign_in, :update, :twilio]
   before_filter :require_login, :except => public_actions
   skip_before_filter :verify_authenticity_token, :only => [:twilio]
+  before_filter :use_https
 
   def index
     if session[:authenticated_user_id]
@@ -327,6 +328,16 @@ private
       phone = '1' + phone
     end
     return phone
+  end
+
+  # make sure we are using https
+  # used as a before filter
+  def use_https
+    if Rails.env.production?
+      if request.protocol != 'https://'
+        return redirect_to "https://#{request.url[(request.protocol.size)..(-1)]}"
+      end
+    end
   end
 
 end
