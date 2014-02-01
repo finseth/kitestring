@@ -220,16 +220,16 @@ class HomeController < ApplicationController
     twilio = Twilio::REST::Client.new TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN
     User.all.each do |user|
       if user.checkpoint
-        if now > user.checkpoint
+        if now > user.checkpoint - 30.seconds
           if user.pinged == false
             begin
-              twilio.account.messages.create(:body => 'Your Kitestring trip is over!  Please reply \'ok\' to end your trip so we know you\'re safe.', :to => user.phone, :from => TWILIO_PHONE_NUMBER)
+              twilio.account.messages.create(:body => 'Your Kitestring trip is over!  Please reply \'ok\' to end your trip so we know you\'re safe.  You can also reply a duration like \'5m\' to extend your ETA.', :to => user.phone, :from => TWILIO_PHONE_NUMBER)
             rescue
             end
             user.pinged = true
             user.save
           else
-            if now > user.checkpoint + 5.minutes
+            if now > user.checkpoint + 5.minutes - 30.seconds
               if user.responded == false
                 if user.alerted == false
                   user.contacts.each do |contact|
@@ -253,12 +253,30 @@ class HomeController < ApplicationController
 
   def twilio
     phone = normalize_phone(params['From'])
-    body = params['Body']
+    body = params['Body'].strip()
     now = Time.zone.now
     user = User.find_by phone: phone
     if user
       if user.checkpoint
-        if now > user.checkpoint
+        if body =~ /\d+m(in)?/
+          num = body.scan(/\d+/)[0].to_i
+          user.checkpoint += num.minutes
+          user.save
+          twiml = Twilio::TwiML::Response.new do |r|
+            r.Message 'Thanks!  Your ETA has been extended by ' + num.to_s + ' minutes.'
+          end
+          return render :xml => twiml.text
+        end
+        if body =~ /\d+h(r|our)?s?/
+          num = body.scan(/\d+/)[0].to_i
+          user.checkpoint += num.hours
+          user.save
+          twiml = Twilio::TwiML::Response.new do |r|
+            r.Message 'Thanks!  Your ETA has been extended by ' + num.to_s + ' hours.'
+          end
+          return render :xml => twiml.text
+        end
+        if now > user.checkpoint - 30.seconds
           if user.pinged == true
             if user.responded == false
               user.message = nil
@@ -268,7 +286,7 @@ class HomeController < ApplicationController
               user.alerted = nil
               user.save
               twiml = Twilio::TwiML::Response.new do |r|
-                r.Message "Thanks!  Your trip has been ended."
+                r.Message 'Thanks!  Your trip has been ended.'
               end
               return render :xml => twiml.text
             end

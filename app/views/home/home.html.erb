@@ -19,7 +19,7 @@
         <div class="span6 offset3">
           <h2 class="no-top-margin"><i class="fa fa-refresh"></i> Your Current Trip</h2>
           <p id="current-message">{{ current_message }}</p>
-          <p><strong>ETA:</strong> <span ng-class="{'expired': expired}">{{ time_string }} ({{ interval_string }})</span></p>
+          <p><i class="fa fa-clock-o"></i> <strong>ETA:</strong> <span ng-class="{'expired': expired}">{{ time_string }} ({{ interval_string }})</span></p>
           <p class="no-bottom-margin"><a href="/end_checkpoint" class="button" ks-post-anchor="updateCurrentCheckpointFromServer">End trip</a></p>
         </div>
       </div>
@@ -31,8 +31,8 @@
       <div class="row main-row">
         <div class="span6 offset3">
           <%= form_tag('/checkpoint', { 'method' => 'post', 'class' => 'no-vertical-margin', 'data-ks-form' => 'updateCurrentCheckpointFromServer' }) do %>
-            <h2 class="no-top-margin" data-ng-show="active"><i class="fa fa-clock-o"></i> Update your trip</h2>
-            <h2 class="no-top-margin" data-ng-hide="active"><i class="fa fa-clock-o"></i> Taking a walk?</h2>
+            <h2 class="no-top-margin" data-ng-show="active"><i class="fa fa-pencil-square-o"></i> Update your trip</h2>
+            <h2 class="no-top-margin" data-ng-hide="active"><i class="fa fa-pencil-square-o"></i> Taking a walk?</h2>
             <p>Let us know when you would like us to check up on you.</p>
             <p class="no-vertical-margin">
               <input name="time" id="time" data-ng-model="time" type="time" />
