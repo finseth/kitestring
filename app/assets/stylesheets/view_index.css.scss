@@ -126,6 +126,18 @@
 }
 
 #copywriting {
+  background-color: #12111a;
+  color: #999;
+  overflow: auto; /* creates new block formatting context to contain margins of nested elements */
+
+  .main-row {
+    margin-top: 0;
+  }
+
+  h2 {
+    color: #ccc;
+  }
+
   p {
     font-size: 0.95em;
   }
