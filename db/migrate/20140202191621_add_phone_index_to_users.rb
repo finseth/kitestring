@@ -1,3 +1,5 @@
+include ApplicationHelper
+
 class AddPhoneIndexToUsers < ActiveRecord::Migration
   def up
     add_column :users, :phone_index, :string
