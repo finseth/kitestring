@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140128150901) do
+ActiveRecord::Schema.define(version: 20140202191621) do
 
   create_table "contacts", force: true do |t|
     t.string   "name",       null: false
@@ -33,6 +33,9 @@ ActiveRecord::Schema.define(version: 20140128150901) do
     t.boolean  "alerted"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+    t.string   "phone_index",   null: false
   end
+
+  add_index "users", ["phone_index"], name: "index_users_on_phone_index"
 
 end

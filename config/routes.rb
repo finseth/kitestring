@@ -5,8 +5,8 @@ Kitestring::Application.routes.draw do
   get '/faq' => 'home#faq'
   get '/home' => 'home#home'
 
-  post '/send_verification' => 'home#send_verification'
-  get '/verify/:name/:phone' => 'home#verify'
+  post '/sign_up_validate' => 'home#sign_up_validate'
+  post '/sign_up' => 'home#sign_up'
   post '/new_user' => 'home#new_user'
 
   post '/sign_in' => 'home#sign_in'

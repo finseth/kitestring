@@ -1,14 +1,9 @@
-require 'digest'
+include ApplicationHelper
 require 'json'
 require 'twilio-ruby'
 
-TWILIO_ACCOUNT_SID = ENV['TWILIO_ACCOUNT_SID']
-TWILIO_AUTH_TOKEN = ENV['TWILIO_AUTH_TOKEN']
-TWILIO_PHONE_NUMBER = ENV['TWILIO_PHONE_NUMBER']
-APP_SECRET = ENV['APP_SECRET']
-
 class HomeController < ApplicationController
-  public_actions = [:index, :terms, :privacy, :faq, :send_verification, :verify, :new_user, :sign_in, :update, :twilio]
+  public_actions = [:index, :terms, :privacy, :faq, :sign_up_validate, :sign_up, :new_user, :sign_in, :update, :twilio]
   before_filter :require_login, :except => public_actions
   skip_before_filter :verify_authenticity_token, :only => [:twilio]
   before_filter :use_https
@@ -28,31 +23,33 @@ class HomeController < ApplicationController
   def faq
   end
 
-  def send_verification
+  def sign_up_validate
     name = (params['name'] || '').strip
-    phone = normalize_phone(params['phone'] || '')
+    phone = (params['phone'] || '').strip
     if name.size == 0
       return render :json => { :success => false, :notice => 'Please enter your full name.' }
     end
-    if phone == nil
-      return render :json => { :success => false, :notice => 'That phone number does not appear valid.' }
+    if phone.size == 0
+      return render :json => { :success => false, :notice => 'Please enter a phone number.' }
     end
-    user = User.find_by phone: phone
+    user = User.find_by phone_index: normalize_phone(phone)
     if user
       return render :json => { :success => false, :notice => 'That phone number is taken.' }
     end
-    twilio = Twilio::REST::Client.new TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN
-    begin
-      twilio.account.messages.create(:body => 'Welcome to Kitestring!  Your verification code is ' + verification_code(phone) + '.', :to => phone, :from => TWILIO_PHONE_NUMBER)
-    rescue
-      return render :json => { :success => false, :notice => 'That phone number does not appear valid.' }
-    end
-    return render :json => { :success => true, :location => '/verify/' + name +  '/' + phone }
+    return render :json => { :success => true }
   end
 
-  def verify
+  def sign_up
     @name = params['name']
     @phone = params['phone']
+
+    twilio = Twilio::REST::Client.new TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN
+    begin
+      twilio.account.messages.create(:body => 'Welcome to Kitestring!  Your verification code is ' + verification_code(@phone) + '.', :to => @phone, :from => TWILIO_PHONE_NUMBER)
+      @error = false
+    rescue
+      @error = true
+    end
   end
 
   def new_user
@@ -60,7 +57,7 @@ class HomeController < ApplicationController
     name = (params['name'] || '').strip
     password = params['password'] || ''
     confirm_password = params['confirm_password'] || ''
-    phone = normalize_phone(params['phone'] || '')
+    phone = (params['phone'] || '').strip
     if verification.size == 0
       return render :json => { :success => false, :notice => 'Please enter the verification code sent to your mobile device.' }
     end
@@ -73,10 +70,10 @@ class HomeController < ApplicationController
     if password != confirm_password
       return render :json => { :success => false, :notice => 'Your passwords do not match.' }
     end
-    if phone == nil
-      return render :json => { :success => false, :notice => 'That phone number does not appear valid.' }
+    if phone.size == 0
+      return render :json => { :success => false, :notice => 'Please enter a phone number.' }
     end
-    user = User.find_by phone: phone
+    user = User.find_by phone_index: normalize_phone(phone)
     if user
       return render :json => { :success => false, :notice => 'That phone number is taken.' }
     end
@@ -84,21 +81,21 @@ class HomeController < ApplicationController
       return render :json => { :success => false, :notice => 'That verification code is incorrect.' }
     end
     salt = (0...50).map { ('a'..'z').to_a[rand(26)] }.join
-    user = User.create(:phone => phone, :name => name, :password_salt => salt, :password_hash => password_hash(password, salt))
+    user = User.create(:phone => phone, :phone_index => normalize_phone(phone), :name => name, :password_salt => salt, :password_hash => password_hash(password, salt))
     session[:authenticated_user_id] = user.id
     return render :json => { :success => true, :location => '/home' }
   end
 
   def sign_in
-    phone = normalize_phone(params['phone'] || '')
+    phone_index = normalize_phone(params['phone'] || '')
     password = params['password'] || ''
-    if phone == nil
-      return render :json => { :success => false, :notice => 'That phone number does not appear valid.' }
+    if phone_index.size == 0
+      return render :json => { :success => false, :notice => 'Please enter a phone number.' }
     end
     if password.size == 0
       return render :json => { :success => false, :notice => 'Please enter a password.' }
     end
-    user = User.find_by phone: phone
+    user = User.find_by phone_index: phone_index
     if user == nil
       return render :json => { :success => false, :notice => 'Invalid phone number or password.' }
     end
@@ -119,12 +116,12 @@ class HomeController < ApplicationController
 
   def new_contact
     name = (params['name'] || '').strip
-    phone = normalize_phone(params['phone'] || '')
+    phone = (params['phone'] || '').strip
     if name.strip.size == 0
       return render :json => { :success => false, :notice => 'Please enter a name for the contact.' }
     end
-    if phone == nil
-      return render :json => { :success => false, :notice => 'That phone number does not appear valid.' }
+    if phone.size == 0
+      return render :json => { :success => false, :notice => 'Please enter a phone number for the contact.' }
     end
     @user.contacts.create(:name => name, :phone => phone)
     return render :json => { :success => true, :contacts => @user.contacts.to_json }
@@ -258,7 +255,7 @@ class HomeController < ApplicationController
     phone = normalize_phone(params['From'])
     body = params['Body'].strip().downcase()
     now = Time.zone.now
-    user = User.find_by phone: phone
+    user = User.find_by phone_index: normalize_phone(phone)
     if user
       if user.checkpoint
         if body =~ /[1-9]\d*\s*m(in|inute)?s?/
@@ -332,16 +329,6 @@ private
     end
   end
 
-  # compute the verification code for a phone number
-  def verification_code(phone)
-    return Digest::SHA256.hexdigest(APP_SECRET + phone + APP_SECRET).to_i(16).to_s(10)[0...6]
-  end
-
-  # compute a password hash
-  def password_hash(password, salt)
-    return Digest::SHA256.hexdigest(salt + password + salt)
-  end
-
   # show a message on the next page load
   def notice(message)
     if flash[:notices]
@@ -349,18 +336,6 @@ private
     else
       flash[:notices] = [message]
     end
-  end
-
-  # normalize a phone number
-  def normalize_phone(phone)
-    phone = phone.strip.gsub(/[-+() ]/, '')
-    if phone == '' || phone.gsub(/[0-9]/, '') != ''
-      return nil
-    end
-    if phone.size == 10
-      phone = '1' + phone
-    end
-    return phone
   end
 
   # make sure we are using https

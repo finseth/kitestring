@@ -31,13 +31,18 @@
   </div>
 </div>
 
-<div class="container">
+<div class="container" data-ng-controller="IndexController">
   <div class="row main-row">
     <div class="span4 offset2">
-      <%= form_tag('/send_verification', { 'method' => 'post', 'id' => 'sign_up_form', 'class' => 'no-vertical-margin', 'data-ks-form' => '' }) do %>
+      <%= form_tag('/sign_up', { 'method' => 'post', 'id' => 'verify_form', 'class' => 'hidden' }) do %>
+        <input data-ng-model="name" name="name" type="text" />
+        <input data-ng-model="phone" name="phone" type="text" />
+        <input type="submit" value="Submit" />
+      <% end %>
+      <%= form_tag('/sign_up_validate', { 'method' => 'post', 'id' => 'sign_up_form', 'class' => 'no-vertical-margin', 'data-ks-form' => 'signUpValidate' }) do %>
         <h2 class="no-top-margin"><i class="fa fa-rocket"></i> Sign up</h2>
-        <div class="small-p"><input name="name" class="focus-target full-width" type="text" placeholder="Full Name" /></div>
-        <div class="small-p"><input name="phone" class="full-width" type="tel" placeholder="Phone number" /></div>
+        <div class="small-p"><input data-ng-model="name" name="name" class="focus-target full-width" type="text" placeholder="Full Name" /></div>
+        <div class="small-p"><input data-ng-model="phone" name="phone" class="full-width" type="tel" placeholder="Phone number" /></div>
         <div class="small-p no-bottom-margin"><input type="submit" class="button" value="Sign up" /></div>
       <% end %>
     </div>
