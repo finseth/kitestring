@@ -8,7 +8,7 @@ TWILIO_PHONE_NUMBER = ENV['TWILIO_PHONE_NUMBER']
 APP_SECRET = ENV['APP_SECRET']
 
 class HomeController < ApplicationController
-  public_actions = [:index, :terms, :privacy, :send_verification, :verify, :new_user, :sign_in, :update, :twilio]
+  public_actions = [:index, :terms, :privacy, :faq, :send_verification, :verify, :new_user, :sign_in, :update, :twilio]
   before_filter :require_login, :except => public_actions
   skip_before_filter :verify_authenticity_token, :only => [:twilio]
   before_filter :use_https
@@ -23,6 +23,9 @@ class HomeController < ApplicationController
   end
 
   def privacy
+  end
+
+  def faq
   end
 
   def send_verification

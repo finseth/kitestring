@@ -2,6 +2,7 @@ Kitestring::Application.routes.draw do
   root to: 'home#index'
   get '/terms' => 'home#terms'
   get '/privacy' => 'home#privacy'
+  get '/faq' => 'home#faq'
   get '/home' => 'home#home'
 
   post '/send_verification' => 'home#send_verification'
