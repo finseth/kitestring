@@ -252,10 +252,10 @@ class HomeController < ApplicationController
   end
 
   def twilio
-    phone = normalize_phone(params['From'])
+    phone_index = normalize_phone(params['From'])
     body = params['Body'].strip().downcase()
     now = Time.zone.now
-    user = User.find_by phone_index: normalize_phone(phone)
+    user = User.find_by phone_index: phone_index
     if user
       if user.checkpoint
         if body =~ /[1-9]\d*\s*m(in|inute)?s?/
