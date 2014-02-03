@@ -8,7 +8,10 @@ class NormalizePhoneNumbers < ActiveRecord::Migration
       user.update_attributes!(:phone => normalize_phone(user.phone))
     end
     Contact.all.each do |contact|
-      contact.update_attributes!(:phone => normalize_phone(contact.phone))
+      begin
+        contact.update_attributes!(:phone => normalize_phone(contact.phone))
+      rescue
+      end
     end
   end
 
