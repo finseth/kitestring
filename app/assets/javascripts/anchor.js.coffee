@@ -7,10 +7,7 @@ form.directive('ksNamedAnchor', [() ->
         target = $($(this).attr('href'))
         event.preventDefault()
         event.stopPropagation()
-        scrollElement = 'html, body'
-        if documentElement?
-          scrollElement = documentElement
-        $(scrollElement).animate(
+        $('html, body').animate(
           { scrollTop: target.offset().top },
           500,
           'swing',

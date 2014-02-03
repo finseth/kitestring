@@ -127,12 +127,9 @@ view_home.controller('HomeController', ['$scope', 'ajax', 'notice', ($scope, aja
   ), 5000)
 
   $scope.checkpointForm = (data, textStatus, jqXHR) ->
-    scrollElement = 'html, body'
-    if documentElement?
-      scrollElement = documentElement
-    scrollTop = $(scrollElement).scrollTop()
+    scrollTop = $('body').scrollTop()
     if scrollTop > 0
-      $(scrollElement).animate({ scrollTop: 0 }, scrollTop, 'swing', (() ->
+      $('html, body').animate({ scrollTop: 0 }, scrollTop, 'swing', (() ->
         $scope.$apply (() -> $scope.updateCurrentCheckpointFromServer(data, textStatus, jqXHR))
       ))
     else
@@ -157,12 +154,9 @@ view_home.controller('HomeController', ['$scope', 'ajax', 'notice', ($scope, aja
     $scope.contact_phone = ''
     $('*').blur()
     if $scope.contacts.length == 0
-      scrollElement = 'html, body'
-      if documentElement?
-        scrollElement = documentElement
-      scrollTop = $(scrollElement).scrollTop()
+      scrollTop = $('body').scrollTop()
       if scrollTop > 0
-        $(scrollElement).animate({ scrollTop: 0 }, scrollTop, 'swing', (() ->
+        $('html, body').animate({ scrollTop: 0 }, scrollTop, 'swing', (() ->
           $scope.$apply (() -> $scope.contacts = new_contacts)
         ))
       else
