@@ -152,10 +152,23 @@ view_home.controller('HomeController', ['$scope', 'ajax', 'notice', ($scope, aja
     $scope.contacts = JSON.parse(data.contacts)
 
   $scope.new_contact = (data, textStatus, jqXHR) ->
-    $scope.contacts = JSON.parse(data.contacts)
+    new_contacts = JSON.parse(data.contacts)
     $scope.contact_name = ''
     $scope.contact_phone = ''
     $('*').blur()
+    if $scope.contacts.length == 0
+      scrollElement = 'html, body'
+      if documentElement?
+        scrollElement = documentElement
+      scrollTop = $(scrollElement).scrollTop()
+      if scrollTop > 0
+        $(scrollElement).animate({ scrollTop: 0 }, scrollTop, 'swing', (() ->
+          $scope.$apply (() -> $scope.contacts = new_contacts)
+        ))
+      else
+        $scope.contacts = new_contacts
+    else
+      $scope.contacts = new_contacts
 
   # account
 
