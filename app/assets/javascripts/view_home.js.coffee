@@ -126,6 +126,18 @@ view_home.controller('HomeController', ['$scope', 'ajax', 'notice', ($scope, aja
     }
   ), 5000)
 
+  $scope.checkpointForm = (data, textStatus, jqXHR) ->
+    scrollElement = 'html, body'
+    if documentElement?
+      scrollElement = documentElement
+    scrollTop = $(scrollElement).scrollTop()
+    if scrollTop > 0
+      $(scrollElement).animate({ scrollTop: 0 }, scrollTop, 'swing', (() ->
+        $scope.$apply (() -> $scope.updateCurrentCheckpointFromServer(data, textStatus, jqXHR))
+      ))
+    else
+      $scope.updateCurrentCheckpointFromServer(data, textStatus, jqXHR)
+
   # contacts
 
   $scope.contacts = window.contacts
