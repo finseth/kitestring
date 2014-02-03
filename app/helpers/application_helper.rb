@@ -18,11 +18,8 @@ module ApplicationHelper
 
   # normalize a phone number
   def normalize_phone(phone)
-    phone = phone.strip.gsub(/[-+() ]/, '')
-    if phone.size == 10
-      phone = '1' + phone
-    end
-    return phone
+    Phoner::Phone.default_country_code = '1'
+    return Phoner::Phone.parse(phone).to_s
   end
 
 end

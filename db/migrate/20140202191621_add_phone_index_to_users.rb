@@ -11,6 +11,6 @@ class AddPhoneIndexToUsers < ActiveRecord::Migration
   end
 
   def down
-     remove_column :users, :phone_index
+    remove_column :users, :phone_index
   end
 end
