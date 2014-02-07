@@ -196,7 +196,7 @@ class HomeController < ApplicationController
     if message.size == 0
       return render :json => { :success => false, :notice => 'Please enter a message to be sent to your emergency contacts.' }
     end
-    time = (params['time_utc'] || '').strip
+    time = (params['datetime_utc'] || '').strip
     if !(time =~ /\d+?/)
       return render :json => { :success => false, :notice => 'Please format the time as HH:MM according to a 24-hour clock.' }
     end
@@ -212,7 +212,7 @@ class HomeController < ApplicationController
     @user.responded = false
     @user.alerted = false
     @user.save
-    return render :json => { :success => true, :active => true, :time_utc => (@user.checkpoint.utc().to_i * 1000), :message => message, :notice => msg }
+    return render :json => { :success => true, :active => true, :datetime_utc => (@user.checkpoint.utc().to_i * 1000), :message => message, :notice => msg }
   end
 
   def end_checkpoint
@@ -222,14 +222,14 @@ class HomeController < ApplicationController
     @user.responded = nil
     @user.alerted = nil
     @user.save
-    return render :json => { :success => true, :active => false, :time_utc => nil, :message => nil }
+    return render :json => { :success => true, :active => false, :datetime_utc => nil, :message => nil }
   end
 
   def status
     if @user.checkpoint
-      return render :json => { :success => true, :active => true, :time_utc => (@user.checkpoint.utc().to_i * 1000), :message => @user.message }
+      return render :json => { :success => true, :active => true, :datetime_utc => (@user.checkpoint.utc().to_i * 1000), :message => @user.message }
     else
-      return render :json => { :success => true, :active => false, :time_utc => nil, :message => nil }
+      return render :json => { :success => true, :active => false, :datetime_utc => nil, :message => nil }
     end
   end
 
