@@ -119,6 +119,13 @@ view_home.controller('HomeController', ['$scope', 'ajax', 'notice', ($scope, aja
         interval_string += ' ago'
       $scope.interval_string = interval_string
 
+  updateTimeUTC = () ->
+    time = getCheckpointInput()
+    if time == null
+      $scope.datetime_utc = ''
+    else
+      $scope.datetime_utc = String(getCheckpointInput().getTime())
+
   $scope.checkpointIn = (event, minutes) ->
     time = new Date()
     time.setTime(time.getTime() + 1000 * 60 * minutes)
@@ -141,13 +148,7 @@ view_home.controller('HomeController', ['$scope', 'ajax', 'notice', ($scope, aja
     initial.setTime(initial.getTime() + 1000 * 60 * 30)
     setCheckpointInput(initial)
     $scope.message = 'This is ' + window.user_name + '. If you get this message, I did not get home safely when planned, and I might be in danger. (Do not reply to this message.)'
-  $scope.$watchCollection('[time, date]', () ->
-    time = getCheckpointInput()
-    if time == null
-      $scope.datetime_utc = ''
-    else
-      $scope.datetime_utc = String(getCheckpointInput().getTime())
-  )
+  $scope.$watchCollection('[time, date]', updateTimeUTC)
   $scope.$watch('current_checkpoint', updateCurrentCheckpointView)
   setInterval((() -> $scope.$apply(updateCurrentCheckpointView)), 30000)
   setInterval((() ->
@@ -157,6 +158,7 @@ view_home.controller('HomeController', ['$scope', 'ajax', 'notice', ($scope, aja
       success: $scope.updateCurrentCheckpointFromServer,
       scope: $scope
     }
+    $scope.$apply(updateTimeUTC)
   ), 5000)
 
   $scope.checkpointForm = (data, textStatus, jqXHR) ->
