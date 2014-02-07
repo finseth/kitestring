@@ -19,8 +19,8 @@
         <div class="span6 offset3">
           <h2 class="no-top-margin"><i class="fa fa-refresh"></i> Your Current Trip</h2>
           <p id="current-message">{{ current_message }}</p>
-          <p><i class="fa fa-clock-o"></i> <strong>ETA:</strong> <span ng-class="{'expired': expired}">{{ time_string }} {{ date_string }} (<strong>{{ interval_string }}</strong>)</span></p>
-          <p class="no-bottom-margin"><a href="/end_checkpoint" class="button" ks-post-anchor="updateCurrentCheckpointFromServer">End trip</a></p>
+          <p><i class="fa fa-clock-o"></i> <strong>ETA:</strong> <span data-ng-class="{'expired': expired}">{{ time_string }} {{ date_string }} (<strong>{{ interval_string }}</strong>)</span></p>
+          <p class="no-bottom-margin"><a href="/end_checkpoint" class="button" data-ks-post-anchor="updateCurrentCheckpointFromServer">End trip</a></p>
         </div>
       </div>
     </div>
@@ -58,8 +58,8 @@
               <input type="submit" data-ng-show="active" class="button" value="Update trip" />
               <input type="submit" data-ng-hide="active" class="button" value="Embark" />
             </div>
-          </div>
-        <% end %>
+          <% end %>
+        </div>
       </div>
     </div>
   </div>

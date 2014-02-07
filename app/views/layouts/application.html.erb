@@ -23,7 +23,7 @@
         <div class="notice slide" data-ng-repeat="msg in notices">
           <div class="notice-spacer"></div>
           <div>
-            <span compile="msg"></span>
+            <span data-compile="msg"></span>
             <a class="notice-close" href="#">
               <i class="fa fa-times"></i>
             </a>
@@ -37,7 +37,7 @@
         <div class="notice slide" data-ng-repeat="msg in notices">
           <div class="notice-spacer"></div>
           <div>
-            <span compile="msg"></span>
+            <span data-compile="msg"></span>
             <a class="notice-close" href="#" data-ng-click="close($event, $index)">
               <i class="fa fa-times"></i>
             </a>
@@ -53,10 +53,10 @@
           <div id="nav">
             <% if session[:authenticated_user_id] == nil %>
               <% if current_page?(controller: 'home', action: 'index') %>
-                <a href="#sign_in_form" ks-named-anchor><i class="fa fa-sign-in"></i> Sign in</a>
+                <a href="#sign_in_form" data-ks-named-anchor><i class="fa fa-sign-in"></i> Sign in</a>
               <% end %>
             <% else %>
-              <a href="/sign_out" ks-post-anchor><i class="fa fa-sign-out"></i> Sign out</a>
+              <a href="/sign_out" data-ks-post-anchor><i class="fa fa-sign-out"></i> Sign out</a>
             <% end %>
           </div>
         </div>
