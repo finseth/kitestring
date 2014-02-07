@@ -245,7 +245,7 @@ class HomeController < ApplicationController
     twilio = Twilio::REST::Client.new TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN
     User.all.each do |user|
       if user.checkpoint
-        if now > user.checkpoint - 30.seconds
+        if now > user.checkpoint
           if user.pinged == false
             begin
               twilio.account.messages.create(:body => 'Your Kitestring trip is over!  Please reply \'ok\' to end your trip so we know you\'re safe.  You can also reply a duration like \'5m\' to extend your ETA.', :to => user.phone, :from => TWILIO_PHONE_NUMBER)
@@ -254,7 +254,7 @@ class HomeController < ApplicationController
             user.pinged = true
             user.save
           else
-            if now > user.checkpoint + 5.minutes - 30.seconds
+            if now > user.checkpoint + 5.minutes
               if user.responded == false
                 if user.alerted == false
                   user.contacts.each do |contact|

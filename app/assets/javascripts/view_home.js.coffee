@@ -11,6 +11,7 @@ view_home.controller('HomeController', ['$scope', 'ajax', 'notice', ($scope, aja
     $scope.date_string = ''
     $scope.interval_string = ''
     $scope.datetime_utc = ''
+    $scope.interval = ''
     $scope.expired = false
   else
     $scope.current_checkpoint = new Date()
@@ -19,6 +20,7 @@ view_home.controller('HomeController', ['$scope', 'ajax', 'notice', ($scope, aja
     $scope.date_string = ''
     $scope.interval_string = ''
     $scope.datetime_utc = ''
+    $scope.interval = ''
     $scope.expired = false
 
   numberToString = (num, minWidth) ->
@@ -39,7 +41,7 @@ view_home.controller('HomeController', ['$scope', 'ajax', 'notice', ($scope, aja
     day_str = numberToString(datetime.getDate(), 2)
     $scope.date = year_str + '-' + month_str + '-' + day_str
 
-  window.getCheckpointInput = () ->
+  getCheckpointInput = () ->
     if /\d\d\d\d-\d\d-\d\d/g.test($scope.date) && /\d\d?:\d\d?/g.test($scope.time)
       time_parts = $scope.time.split(':')
       hours = Number(time_parts[0])
@@ -51,80 +53,104 @@ view_home.controller('HomeController', ['$scope', 'ajax', 'notice', ($scope, aja
       return new Date(year, month - 1, day, hours, minutes)
     return null
 
+  getTimeString = (datetime) ->
+    adjusted_time = new Date()
+    adjusted_time.setTime(datetime.getTime() + 30 * 1000)
+    if adjusted_time.getHours() > 12
+      hours_str = numberToString(adjusted_time.getHours() - 12, 1)
+      period = 'PM'
+    if adjusted_time.getHours() == 12
+      hours_str = '12'
+      period = 'PM'
+    if adjusted_time.getHours() < 12
+      hours_str = numberToString(adjusted_time.getHours(), 1)
+      period = 'AM'
+    if adjusted_time.getHours() == 0
+      hours_str = '12'
+      period = 'AM'
+    minutes_str = numberToString(adjusted_time.getMinutes(), 2)
+    return hours_str + ':' + minutes_str + ' ' + period
+
+  getDateString = (datetime) ->
+    adjusted_time = new Date()
+    adjusted_time.setTime(datetime.getTime() + 30 * 1000)
+    if compareDates(adjusted_time, (new Date()))
+      return 'today'
+    return adjusted_time.toDateString()
+
+  getRelativeTimeString = (datetime) ->
+    adjusted_time = new Date()
+    adjusted_time.setTime(datetime.getTime() + 30 * 1000)
+    adjusted_time.setSeconds(0)
+    now = new Date()
+    adjusted_time.setSeconds(0)
+    minutes = Math.ceil((adjusted_time.getTime() - now.getTime()) / (1000 * 60))
+    if minutes < 0
+      minutes = -minutes
+      negative = true
+    else
+      negative = false
+    days = Math.floor(minutes / (24 * 60))
+    hours = Math.floor((minutes / 60) % 24)
+    minutes = Math.round(minutes % 60)
+    parts = []
+    if days > 0
+      if days > 1
+        parts.push(String(days) + ' days')
+      else
+        parts.push(String(days) + ' day')
+    if hours > 0
+      if hours > 1
+        parts.push(String(hours) + ' hours')
+      else
+        parts.push(String(hours) + ' hour')
+    if minutes > 0
+      if minutes > 1
+        parts.push(String(minutes) + ' minutes')
+      else
+        parts.push(String(minutes) + ' minute')
+    if parts.length == 0
+      interval_string = 'now'
+    if parts.length == 1
+      interval_string = parts[0]
+    if parts.length == 2
+      interval_string = parts[0] + ' and ' + parts[1]
+    if parts.length == 3
+      interval_string = parts[0] + ', ' + parts[1] + ' and ' + parts[2]
+    if negative
+      interval_string += ' ago'
+    return interval_string
+
+  isNow = (datetime) ->
+    adjusted_time = new Date()
+    adjusted_time.setTime(datetime.getTime() + 30 * 1000)
+    adjusted_time.setSeconds(0)
+    now = new Date()
+    adjusted_time.setSeconds(0)
+    minutes = Math.ceil((adjusted_time.getTime() - now.getTime()) / (1000 * 60))
+    return minutes == 0
+
   updateCurrentCheckpointView = () ->
     if $scope.active
-      adjusted_time = new Date()
-      adjusted_time.setTime($scope.current_checkpoint.getTime() + 30 * 1000)
-
-      if adjusted_time.getHours() > 12
-        hours_str = numberToString(adjusted_time.getHours() - 12, 1)
-        period = 'PM'
-      if adjusted_time.getHours() == 12
-        hours_str = '12'
-        period = 'PM'
-      if adjusted_time.getHours() < 12
-        hours_str = numberToString(adjusted_time.getHours(), 1)
-        period = 'AM'
-      if adjusted_time.getHours() == 0
-        hours_str = '12'
-        period = 'AM'
-      minutes_str = numberToString(adjusted_time.getMinutes(), 2)
-      $scope.time_string = hours_str + ':' + minutes_str + ' ' + period
-
-      if compareDates(adjusted_time, (new Date()))
-        $scope.date_string = ''
-      else
-        $scope.date_string = adjusted_time.toDateString()
-
-      minutes = Math.round((adjusted_time.getTime() - (new Date()).getTime()) / (1000 * 60))
-      if minutes < 1
+      $scope.time_string = getTimeString($scope.current_checkpoint)
+      $scope.date_string = getDateString($scope.current_checkpoint)
+      $scope.interval_string = getRelativeTimeString($scope.current_checkpoint)
+      if isNow($scope.current_checkpoint)
         if !$scope.expired
           notice('Please end your trip or update your ETA so we know you\'re safe.')
         $scope.expired = true
       else
         $scope.expired = false
-      if minutes < 0
-        minutes = -minutes
-        negative = true
-      else
-        negative = false
-      days = Math.floor(minutes / (24 * 60))
-      hours = Math.floor((minutes / 60) % 24)
-      minutes = Math.round(minutes % 60)
-      parts = []
-      if days > 0
-        if days > 1
-          parts.push(String(days) + ' days')
-        else
-          parts.push(String(days) + ' day')
-      if hours > 0
-        if hours > 1
-          parts.push(String(hours) + ' hours')
-        else
-          parts.push(String(hours) + ' hour')
-      if minutes > 0
-        if minutes > 1
-          parts.push(String(minutes) + ' minutes')
-        else
-          parts.push(String(minutes) + ' minute')
-      if parts.length == 0
-        interval_string = 'now'
-      if parts.length == 1
-        interval_string = parts[0]
-      if parts.length == 2
-        interval_string = parts[0] + ' and ' + parts[1]
-      if parts.length == 3
-        interval_string = parts[0] + ', ' + parts[1] + ' and ' + parts[2]
-      if negative
-        interval_string += ' ago'
-      $scope.interval_string = interval_string
 
-  updateTimeUTC = () ->
+  step = () ->
     time = getCheckpointInput()
     if time == null
       $scope.datetime_utc = ''
+      $scope.interval = ''
     else
-      $scope.datetime_utc = String(getCheckpointInput().getTime())
+      checkpoint = getCheckpointInput()
+      $scope.datetime_utc = String(checkpoint.getTime())
+      $scope.interval = getRelativeTimeString(checkpoint)
 
   $scope.checkpointIn = (event, minutes) ->
     time = new Date()
@@ -148,7 +174,7 @@ view_home.controller('HomeController', ['$scope', 'ajax', 'notice', ($scope, aja
     initial.setTime(initial.getTime() + 1000 * 60 * 30)
     setCheckpointInput(initial)
     $scope.message = 'This is ' + window.user_name + '. If you get this message, I did not get home safely when planned, and I might be in danger. (Do not reply to this message.)'
-  $scope.$watchCollection('[time, date]', updateTimeUTC)
+  $scope.$watchCollection('[time, date]', step)
   $scope.$watch('current_checkpoint', updateCurrentCheckpointView)
   setInterval((() -> $scope.$apply(updateCurrentCheckpointView)), 30000)
   setInterval((() ->
@@ -158,8 +184,10 @@ view_home.controller('HomeController', ['$scope', 'ajax', 'notice', ($scope, aja
       success: $scope.updateCurrentCheckpointFromServer,
       scope: $scope
     }
-    $scope.$apply(updateTimeUTC)
   ), 5000)
+  setInterval((() ->
+    $scope.$apply(step)
+  ), 1000)
 
   $scope.checkpointForm = (data, textStatus, jqXHR) ->
     scrollTop = $('body').scrollTop()
