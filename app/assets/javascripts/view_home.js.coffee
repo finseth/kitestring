@@ -55,12 +55,18 @@ view_home.controller('HomeController', ['$scope', 'ajax', 'notice', ($scope, aja
     if $scope.active
       adjusted_time = new Date()
       adjusted_time.setTime($scope.current_checkpoint.getTime() + 30 * 1000)
-      
+
       if adjusted_time.getHours() > 12
         hours_str = numberToString(adjusted_time.getHours() - 12, 1)
         period = 'PM'
-      else
+      if adjusted_time.getHours() == 12
+        hours_str = '12'
+        period = 'PM'
+      if adjusted_time.getHours() < 12
         hours_str = numberToString(adjusted_time.getHours(), 1)
+        period = 'AM'
+      if adjusted_time.getHours() == 0
+        hours_str = '12'
         period = 'AM'
       minutes_str = numberToString(adjusted_time.getMinutes(), 2)
       $scope.time_string = hours_str + ':' + minutes_str + ' ' + period
