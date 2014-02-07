@@ -198,7 +198,7 @@ class HomeController < ApplicationController
     end
     time = (params['datetime_utc'] || '').strip
     if !(time =~ /\d+?/)
-      return render :json => { :success => false, :notice => 'Please format the time as HH:MM according to a 24-hour clock.' }
+      return render :json => { :success => false, :notice => 'Please format the date as YYYY-MM-DD and the time as HH:MM according to a 24-hour clock.' }
     end
     if Time.zone.at(time.to_i / 1000) <= Time.zone.now
       return render :json => { :success => false, :notice => 'The time must be in the future.' }
