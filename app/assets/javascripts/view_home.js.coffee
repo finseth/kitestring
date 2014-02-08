@@ -158,7 +158,7 @@ view_home.controller('HomeController', ['$scope', 'ajax', 'notice', ($scope, aja
       checkpoint = getCheckpointInput()
       $scope.datetime_utc = String(checkpoint.getTime())
       $scope.interval = getRelativeTimeString(checkpoint)
-      $scope.interval = $scope.interval.charAt(0).toUpperCase() + $scope.interval.slice(1)
+      $scope.interval = $scope.interval.charAt(0).toUpperCase() + $scope.interval.slice(1) + '.'
     updateCurrentCheckpointView()
 
   $scope.checkpointIn = (event, minutes) ->
