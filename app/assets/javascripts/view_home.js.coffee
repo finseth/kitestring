@@ -87,8 +87,13 @@ view_home.controller('HomeController', ['$scope', 'ajax', 'notice', ($scope, aja
     minutes = Math.ceil((adjusted_time.getTime() - now.getTime()) / (1000 * 60))
     if minutes < 0
       minutes = -minutes
+      positive = false
       negative = true
+    else if minutes > 0
+      positive = true
+      negative = false
     else
+      positive = false
       negative = false
     days = Math.floor(minutes / (24 * 60))
     hours = Math.floor((minutes / 60) % 24)
@@ -117,6 +122,8 @@ view_home.controller('HomeController', ['$scope', 'ajax', 'notice', ($scope, aja
       interval_string = parts[0] + ' and ' + parts[1]
     if parts.length == 3
       interval_string = parts[0] + ', ' + parts[1] + ' and ' + parts[2]
+    if positive
+      interval_string += ' from now'
     if negative
       interval_string += ' ago'
     return interval_string
@@ -151,6 +158,8 @@ view_home.controller('HomeController', ['$scope', 'ajax', 'notice', ($scope, aja
       checkpoint = getCheckpointInput()
       $scope.datetime_utc = String(checkpoint.getTime())
       $scope.interval = getRelativeTimeString(checkpoint)
+      $scope.interval = $scope.interval.charAt(0).toUpperCase() + $scope.interval.slice(1)
+    updateCurrentCheckpointView()
 
   $scope.checkpointIn = (event, minutes) ->
     time = new Date()
@@ -176,7 +185,6 @@ view_home.controller('HomeController', ['$scope', 'ajax', 'notice', ($scope, aja
     $scope.message = 'This is ' + window.user_name + '. If you get this message, I did not get home safely when planned, and I might be in danger. (Do not reply to this message.)'
   $scope.$watchCollection('[time, date]', step)
   $scope.$watch('current_checkpoint', updateCurrentCheckpointView)
-  setInterval((() -> $scope.$apply(updateCurrentCheckpointView)), 30000)
   setInterval((() ->
     ajax {
       url: '/status',
