@@ -26,21 +26,35 @@ body {
     font-weight: 400;
   }
 
-  table {
-    tr {
-      td {
-        padding: 8px 16px;
-      }
+  .rounded {
+    @include border-radius(2px);
+    overflow: auto;
+  }
 
-      border-bottom: 1px solid #eee;
-      background-color: #fff;
+  table {
+    width: 100%;
+
+    tr {
+      width: 100%;
+      background-color: #eee;
+
+      &:nth-child(even) {
+        background-color: #ddd;
+      }
 
       &:last-child {
         border-bottom: none;
       }
 
-      &:hover {
-        background-color: #eee;
+      td, th {
+        padding: 8px 16px;
+        font-size: 0.9em;
+        font-weight: 400;
+        text-align: left;
+      }
+
+      th {
+        border-bottom: 1px solid #ccc;
       }
     }
   }
