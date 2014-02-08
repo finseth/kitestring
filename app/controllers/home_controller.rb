@@ -5,7 +5,7 @@ class HomeController < ApplicationController
   public_actions = [:index, :terms, :privacy, :faq, :sign_up_validate, :sign_up, :new_user, :sign_in, :update, :twilio]
   before_filter :require_login, :except => public_actions
   skip_before_filter :verify_authenticity_token, :only => [:twilio]
-  before_filter :use_https
+  before_filter :use_https, :except => [:update]
 
   def index
     if session[:authenticated_user_id]
