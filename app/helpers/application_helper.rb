@@ -19,6 +19,9 @@ module ApplicationHelper
   # normalize a phone number
   def normalize_phone(phone)
     Phoner::Phone.default_country_code = '1'
+    if phone.gsub(/[^0-9]/, '').size == 11 && phone[0] == '1'
+      phone = '+' + phone
+    end
     return Phoner::Phone.parse(phone).to_s
   end
 
