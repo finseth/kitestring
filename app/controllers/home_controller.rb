@@ -149,7 +149,7 @@ class HomeController < ApplicationController
       return render :json => { :success => false, :notice => 'That phone number appears invalid.' }
     end
     @user.contacts.create(:name => name, :phone => phone)
-    return render :json => { :success => true, :contacts => @user.contacts.to_json }
+    return render :json => { :success => true, :contacts => @user.contacts.order(id: :asc).to_json }
   end
 
   def delete_contact
@@ -157,7 +157,7 @@ class HomeController < ApplicationController
       return render :json => { :success => false, :notice => 'You cannot delete your only emergency contact while on a trip.' }
     end
     @user.contacts.find(params['id'].to_i).destroy
-    return render :json => { :success => true, :contacts => @user.contacts.to_json }
+    return render :json => { :success => true, :contacts => @user.contacts.order(id: :asc).to_json }
   end
 
   def move_contact_up
@@ -171,7 +171,7 @@ class HomeController < ApplicationController
     prev_contact.phone = old_phone
     this_contact.save
     prev_contact.save
-    return render :json => { :success => true, :contacts => @user.contacts.to_json }
+    return render :json => { :success => true, :contacts => @user.contacts.order(id: :asc).to_json }
   end
 
   def move_contact_down
@@ -185,7 +185,7 @@ class HomeController < ApplicationController
     next_contact.phone = old_phone
     this_contact.save
     next_contact.save
-    return render :json => { :success => true, :contacts => @user.contacts.to_json }
+    return render :json => { :success => true, :contacts => @user.contacts.order(id: :asc).to_json }
   end
 
   def checkpoint
