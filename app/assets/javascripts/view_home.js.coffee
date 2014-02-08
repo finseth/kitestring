@@ -7,18 +7,18 @@ view_home.controller('HomeController', ['$scope', 'ajax', 'notice', ($scope, aja
   if $scope.active
     $scope.current_checkpoint = current_checkpoint
     $scope.current_message = current_message
-    $scope.time_string = ''
-    $scope.date_string = ''
-    $scope.interval_string = ''
+    $scope.current_time_string = ''
+    $scope.current_date_string = ''
+    $scope.current_interval_string = ''
     $scope.datetime_utc = ''
     $scope.interval = ''
     $scope.expired = false
   else
     $scope.current_checkpoint = new Date()
     $scope.current_message = ''
-    $scope.time_string = ''
-    $scope.date_string = ''
-    $scope.interval_string = ''
+    $scope.current_time_string = ''
+    $scope.current_date_string = ''
+    $scope.current_interval_string = ''
     $scope.datetime_utc = ''
     $scope.interval = ''
     $scope.expired = false
@@ -132,9 +132,9 @@ view_home.controller('HomeController', ['$scope', 'ajax', 'notice', ($scope, aja
 
   updateCurrentCheckpointView = () ->
     if $scope.active
-      $scope.time_string = getTimeString($scope.current_checkpoint)
-      $scope.date_string = getDateString($scope.current_checkpoint)
-      $scope.interval_string = getRelativeTimeString($scope.current_checkpoint)
+      $scope.current_time_string = getTimeString($scope.current_checkpoint)
+      $scope.current_date_string = getDateString($scope.current_checkpoint)
+      $scope.current_interval_string = getRelativeTimeString($scope.current_checkpoint)
       if isNow($scope.current_checkpoint)
         if !$scope.expired
           notice('Please end your trip or update your ETA so we know you\'re safe.')

@@ -18,8 +18,8 @@
   padding: 8px 8px;
 }
 
-#time-controls {
-  background-color: #ddd;
-  padding: 16px 16px;
-  @include border-radius(2px);
+#interval {
+  font-size: 0.9em;
+  font-weight: 400;
+  color: #999;
 }

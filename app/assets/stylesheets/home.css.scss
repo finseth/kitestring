@@ -153,10 +153,11 @@ body {
     height: 100px;
   }
 
-  .button, a.button {
+  input[type=submit], .button, a.button {
     display: inline-block;
     vertical-align: middle;
-    font-weight: 300;
+    font-weight: 400;
+    font-size: 0.9em;
     text-transform: uppercase;
     -webkit-transition-property: background-color;
     -moz-transition-property:    background-color;
@@ -190,6 +191,7 @@ body {
 
   input, .button {
     height: $input-height;
+    line-height: ($input-height - 16px);
   }
 
 }

@@ -19,7 +19,7 @@
         <div class="span6 offset3">
           <h2 class="no-top-margin"><i class="fa fa-refresh"></i> Your Current Trip</h2>
           <p id="current-message">{{ current_message }}</p>
-          <p><i class="fa fa-clock-o"></i> <strong>ETA:</strong> <span data-ng-class="{'expired': expired}">{{ time_string }} {{ date_string }} (<strong>{{ interval_string }}</strong>)</span></p>
+          <p><i class="fa fa-clock-o"></i> <strong>ETA:</strong> <span data-ng-class="{'expired': expired}">{{ current_time_string }} {{ current_date_string }} (<strong>{{ current_interval_string }}</strong>)</span></p>
           <p class="no-bottom-margin"><a href="/end_checkpoint" class="button" data-ks-post-anchor="updateCurrentCheckpointFromServer">End trip</a></p>
         </div>
       </div>
@@ -34,20 +34,18 @@
             <h2 class="no-top-margin" data-ng-show="active"><i class="fa fa-pencil-square-o"></i> Update your trip</h2>
             <h2 class="no-top-margin" data-ng-hide="active"><i class="fa fa-pencil-square-o"></i> Taking a walk?</h2>
             <p>Let us know when you would like us to check up on you.</p>
-            <div id="time-controls">
-              <div class="small-p no-top-margin">
-                <input name="time" data-ng-model="time" type="time" />
-                <input name="date" data-ng-model="date" type="date" />
-                <br />
-                <a href="#" class="button" data-ng-click="checkpointIn($event, 5)">5m</a>
-                <a href="#" class="button" data-ng-click="checkpointIn($event, 15)">15m</a>
-                <a href="#" class="button" data-ng-click="checkpointIn($event, 30)">30m</a>
-                <a href="#" class="button" data-ng-click="checkpointIn($event, 60)">1hr</a>
-                <a href="#" class="button" data-ng-click="checkpointIn($event, 120)">2hr</a>
-              </div>
-              <div class="small-p no-bottom-margin">
-                {{ interval }}
-              </div>
+            <div class="small-p">
+              <input name="time" data-ng-model="time" type="time" />
+              <input name="date" data-ng-model="date" type="date" />
+              <br />
+              <a href="#" class="button" data-ng-click="checkpointIn($event, 5)">5m</a>
+              <a href="#" class="button" data-ng-click="checkpointIn($event, 15)">15m</a>
+              <a href="#" class="button" data-ng-click="checkpointIn($event, 30)">30m</a>
+              <a href="#" class="button" data-ng-click="checkpointIn($event, 60)">1hr</a>
+              <a href="#" class="button" data-ng-click="checkpointIn($event, 120)">2hr</a>
+            </div>
+            <div id="interval" class="small-p">
+              {{ interval }}
             </div>
             <p>If you don&rsquo;t respond within 5 minutes of recieving our ping, we&rsquo;ll send the following message to your emergency contacts:</p>
             <div class="small-p">
