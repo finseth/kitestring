@@ -3,7 +3,7 @@
 
 <script>
   window.user_name = <%= @user.name.to_json.html_safe -%>;
-  window.contacts = <%= @user.contacts.to_json.html_safe -%>;
+  window.contacts = <%= @user.contacts.order(id: :asc).to_json.html_safe -%>;
   window.active = <%= (@user.checkpoint != nil).to_json.html_safe -%>;
   <% if @user.checkpoint != nil %>
     window.current_checkpoint = new Date();
