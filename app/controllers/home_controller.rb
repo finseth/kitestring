@@ -318,6 +318,21 @@ class HomeController < ApplicationController
           end
           return render :xml => twiml.text
         end
+        if body =~ /[1-9]\d*\s*d(ay|ays)?/
+          num = body.scan(/\d+/)[0].to_i
+          user.checkpoint = Time.zone.now + num.days
+          user.pinged = false
+          user.alerted = false
+          user.save
+          twiml = Twilio::TwiML::Response.new do |r|
+            if num == 1
+              r.Message 'Thanks!  Your ETA has been extended by ' + num.to_s + ' day.'
+            else
+              r.Message 'Thanks!  Your ETA has been extended by ' + num.to_s + ' days.'
+            end
+          end
+          return render :xml => twiml.text
+        end
         if body != 'ok'
           twiml = Twilio::TwiML::Response.new do |r|
             r.Message 'Sorry, what was that?'
