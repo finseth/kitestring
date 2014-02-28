@@ -296,9 +296,9 @@ class HomeController < ApplicationController
           user.save
           twiml = Twilio::TwiML::Response.new do |r|
             if num == 1
-              r.Message 'Thanks!  Your ETA has been extended by ' + num.to_s + ' minute.'
+              r.Message 'Thanks!  Your ETA has been extended until ' + num.to_s + ' minute from now.'
             else
-              r.Message 'Thanks!  Your ETA has been extended by ' + num.to_s + ' minutes.'
+              r.Message 'Thanks!  Your ETA has been extended until ' + num.to_s + ' minutes from now.'
             end
           end
           return render :xml => twiml.text
@@ -311,9 +311,9 @@ class HomeController < ApplicationController
           user.save
           twiml = Twilio::TwiML::Response.new do |r|
             if num == 1
-              r.Message 'Thanks!  Your ETA has been extended by ' + num.to_s + ' hour.'
+              r.Message 'Thanks!  Your ETA has been extended until ' + num.to_s + ' hour from now.'
             else
-              r.Message 'Thanks!  Your ETA has been extended by ' + num.to_s + ' hours.'
+              r.Message 'Thanks!  Your ETA has been extended until ' + num.to_s + ' hours from now.'
             end
           end
           return render :xml => twiml.text
@@ -326,9 +326,9 @@ class HomeController < ApplicationController
           user.save
           twiml = Twilio::TwiML::Response.new do |r|
             if num == 1
-              r.Message 'Thanks!  Your ETA has been extended by ' + num.to_s + ' day.'
+              r.Message 'Thanks!  Your ETA has been extended until ' + num.to_s + ' day from now.'
             else
-              r.Message 'Thanks!  Your ETA has been extended by ' + num.to_s + ' days.'
+              r.Message 'Thanks!  Your ETA has been extended until ' + num.to_s + ' days from now.'
             end
           end
           return render :xml => twiml.text
