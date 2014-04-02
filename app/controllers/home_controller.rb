@@ -338,6 +338,7 @@ class HomeController < ApplicationController
           password = (0...6).map { ('a'..'z').to_a[rand(26)] }.join
           user.password_salt = salt
           user.password_hash = password_hash(password, salt)
+          user.save
           twiml = Twilio::TwiML::Response.new do |r|
             r.Message 'Your new password is: ' + password
           end
