@@ -83,15 +83,15 @@
                 <td>{{ contact.name }}</td>
                 <td>{{ contact.phone }}</td>
                 <td data-ng-show="contacts.length > 1">
-                  <a class="icon-link" href="/move_contact_up/{{ contact.id }}" data-ng-show="!$first" data-ks-post-anchor="move_contact_up"><i class="fa fa-caret-up"></i></a>
-                  <a class="icon-link" href="/move_contact_down/{{ contact.id }}" data-ng-show="!$last" data-ks-post-anchor="move_contact_down"><i class="fa fa-caret-down"></i></a>
+                  <a class="icon-link" href="/move_contact_up/{{ contact.id }}" data-ng-show="!$first" data-ks-post-anchor="moveContactUp"><i class="fa fa-caret-up"></i></a>
+                  <a class="icon-link" href="/move_contact_down/{{ contact.id }}" data-ng-show="!$last" data-ks-post-anchor="moveContactDown"><i class="fa fa-caret-down"></i></a>
                 </td>
-                <td><a class="icon-link" href="/delete_contact/{{ contact.id }}" data-ks-post-anchor="delete_contact"><i class="fa fa-trash-o"></i></a></td>
+                <td><a class="icon-link" href="/delete_contact/{{ contact.id }}" data-ks-post-anchor="deleteContact"><i class="fa fa-trash-o"></i></a></td>
               </tr>
             </table>
           </div>
         </div>
-        <%= form_tag('/new_contact', { 'method' => 'post', 'class' => 'no-bottom-margin', 'data-ks-form' => 'new_contact' }) do %>
+        <%= form_tag('/new_contact', { 'method' => 'post', 'class' => 'no-bottom-margin', 'data-ks-form' => 'newContact' }) do %>
           <p>Add another emergency contact here.</p>
           <div class="small-p no-top-margin"><input name="name" class="full-width" data-ng-model="contact_name" placeholder="Name" type="text" /></div>
           <div class="small-p"><input name="phone" class="full-width" data-ng-model="contact_phone" placeholder="Phone Number" type="tel" /></div>
@@ -112,7 +112,7 @@
         </h2>
         <div class="small-p"><i class="fa fa-lightbulb-o fa-fw"></i> Full name: <strong><%= @user.name -%></strong></div>
         <div class="small-p"><i class="fa fa-mobile fa-fw"></i> Phone number: <strong><%= @user.phone -%></strong></div>
-        <div class="p"><a href="#" class="button" data-ng-click="delete_account($event)">Delete account</a></div>
+        <div class="p"><a href="#" class="button" data-ng-click="deleteAccount($event)">Delete account</a></div>
       </div>
     </div>
   </div>

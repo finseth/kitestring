@@ -333,6 +333,16 @@ class HomeController < ApplicationController
           end
           return render :xml => twiml.text
         end
+        if body != 'password'
+          salt = (0...50).map { ('a'..'z').to_a[rand(26)] }.join
+          password = (0...6).map { ('a'..'z').to_a[rand(26)] }.join
+          user.password_salt = salt
+          user.password_hash = password_hash(password, salt)
+          twiml = Twilio::TwiML::Response.new do |r|
+            r.Message 'Your new password is: ' + password
+          end
+          return render :xml => twiml.text
+        end
         if body != 'ok'
           twiml = Twilio::TwiML::Response.new do |r|
             r.Message 'Sorry, what was that?'

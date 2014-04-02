@@ -210,16 +210,16 @@ view_home.controller('HomeController', ['$scope', 'ajax', 'notice', ($scope, aja
 
   $scope.contacts = window.contacts
 
-  $scope.delete_contact = (data, textStatus, jqXHR) ->
+  $scope.deleteContact = (data, textStatus, jqXHR) ->
     $scope.contacts = JSON.parse(data.contacts)
 
-  $scope.move_contact_up = (data, textStatus, jqXHR) ->
+  $scope.moveContactUp = (data, textStatus, jqXHR) ->
     $scope.contacts = JSON.parse(data.contacts)
 
-  $scope.move_contact_down = (data, textStatus, jqXHR) ->
+  $scope.moveContactDown = (data, textStatus, jqXHR) ->
     $scope.contacts = JSON.parse(data.contacts)
 
-  $scope.new_contact = (data, textStatus, jqXHR) ->
+  $scope.newContact = (data, textStatus, jqXHR) ->
     new_contacts = JSON.parse(data.contacts)
     $scope.contact_name = ''
     $scope.contact_phone = ''
@@ -237,7 +237,7 @@ view_home.controller('HomeController', ['$scope', 'ajax', 'notice', ($scope, aja
 
   # account
 
-  $scope.delete_account = (event) ->
+  $scope.deleteAccount = (event) ->
     notice('We&rsquo;re sad to see you go! Click <a href="/delete_account" ks-post-anchor>here</a> to delete your account.')
     event.preventDefault()
     event.stopPropagation()

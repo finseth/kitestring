@@ -1,6 +1,10 @@
 <% content_for :title, "Kitestring" %>
 <% content_for :description, "Keep tabs on your well-being." %>
 
+<script>
+  window.kitestring_phone = <%= TWILIO_PHONE_NUMBER.to_json.html_safe -%>;
+</script>
+
 <div id="hero">
   <div id="hero-clouds"></div>
   <div id="hero-buildings"></div>
@@ -35,14 +39,14 @@
   <div class="row main-row">
     <div class="span4 offset2">
       <%= form_tag('/sign_up', { 'method' => 'post', 'id' => 'verify_form', 'class' => 'hidden' }) do %>
-        <input data-ng-model="name" name="name" type="text" />
-        <input data-ng-model="phone" name="phone" type="text" />
+        <input data-ng-model="sign_up_name" name="name" type="text" />
+        <input data-ng-model="sign_up_phone" name="phone" type="text" />
         <input type="submit" value="Submit" />
       <% end %>
       <%= form_tag('/sign_up_validate', { 'method' => 'post', 'id' => 'sign_up_form', 'class' => 'no-vertical-margin', 'data-ks-form' => 'signUpValidate' }) do %>
         <h2 class="no-top-margin"><i class="fa fa-rocket"></i> Sign up</h2>
-        <div class="small-p"><input data-ng-model="name" name="name" class="focus-target full-width" type="text" placeholder="Full Name" /></div>
-        <div class="small-p"><input data-ng-model="phone" name="phone" class="full-width" type="tel" placeholder="Phone number" /></div>
+        <div class="small-p"><input data-ng-model="sign_up_name" name="name" class="focus-target full-width" type="text" placeholder="Full Name" /></div>
+        <div class="small-p"><input data-ng-model="sign_up_phone" name="phone" class="full-width" type="tel" placeholder="Phone number" /></div>
         <div class="small-p no-bottom-margin"><input type="submit" class="button" value="Sign up" /></div>
       <% end %>
     </div>
@@ -51,7 +55,7 @@
         <h2 class="no-top-margin"><i class="fa fa-sign-in"></i> Sign in</h2>
         <div class="small-p"><input name="phone" class="focus-target full-width" type="tel" placeholder="Phone number" /></div>
         <div class="small-p"><input name="password" class="full-width" type="password" placeholder="Password" /></div>
-        <div class="small-p no-bottom-margin"><input type="submit" class="button" value="Sign in" /></div>
+        <div class="small-p no-bottom-margin"><input type="submit" class="button" value="Sign in" /> &nbsp;&nbsp;<a href="#" id="forgot-password" data-ng-click="forgotPassword($event)">Forgot password?</a></div>
       <% end %>
     </div>
   </div>
