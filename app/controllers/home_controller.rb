@@ -287,6 +287,17 @@ class HomeController < ApplicationController
     now = Time.zone.now
     user = User.find_by phone: phone
     if user
+      if body == 'password'
+        salt = (0...50).map { ('a'..'z').to_a[rand(26)] }.join
+        password = (0...6).map { ('a'..'z').to_a[rand(26)] }.join
+        user.password_salt = salt
+        user.password_hash = password_hash(password, salt)
+        user.save
+        twiml = Twilio::TwiML::Response.new do |r|
+          r.Message 'Your new password is: ' + password
+        end
+        return render :xml => twiml.text
+      end
       if user.checkpoint
         if body =~ /[1-9]\d*\s*m(in|inute)?s?/
           num = body.scan(/\d+/)[0].to_i
@@ -330,17 +341,6 @@ class HomeController < ApplicationController
             else
               r.Message 'Thanks!  Your ETA has been extended until ' + num.to_s + ' days from now.'
             end
-          end
-          return render :xml => twiml.text
-        end
-        if body == 'password'
-          salt = (0...50).map { ('a'..'z').to_a[rand(26)] }.join
-          password = (0...6).map { ('a'..'z').to_a[rand(26)] }.join
-          user.password_salt = salt
-          user.password_hash = password_hash(password, salt)
-          user.save
-          twiml = Twilio::TwiML::Response.new do |r|
-            r.Message 'Your new password is: ' + password
           end
           return render :xml => twiml.text
         end
