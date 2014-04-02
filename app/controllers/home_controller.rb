@@ -333,7 +333,7 @@ class HomeController < ApplicationController
           end
           return render :xml => twiml.text
         end
-        if body != 'password'
+        if body == 'password'
           salt = (0...50).map { ('a'..'z').to_a[rand(26)] }.join
           password = (0...6).map { ('a'..'z').to_a[rand(26)] }.join
           user.password_salt = salt
