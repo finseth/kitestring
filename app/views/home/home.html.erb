@@ -105,7 +105,7 @@
 
   <div class="container">
     <div class="row main-row">
-      <div class="span6 offset3">
+      <div id="account" class="span6 offset3">
         <h2 class="no-top-margin">
           <i class="fa fa-home"></i>
           Account
@@ -124,11 +124,14 @@
         </div>
         <div class="small-p"><i class="fa fa-mobile fa-fw"></i> Phone number: <strong><%= @user.phone -%></strong></div>
         <div class="small-p" data-ng-show="password_locked">
+          <i class="fa fa-lock fa-fw"></i>
           <a href="#" data-ng-click="startUpdatePassword($event)">Update password</a>
         </div>
         <%= form_tag('/update_password', { 'method' => 'post', 'data-ng-hide' => 'password_locked', 'data-ks-form' => 'updatePassword' }) do %>
           <div class="small-p">
-            <input id="update-password-input" name="password" placeholder="Password" type="password" />
+            <input id="update-password-input" name="password" placeholder="New password" type="password" />
+          </div>
+          <div class="small-p">
             <input name="confirm_password" placeholder="Confirm password" type="password" />
           </div>
           <div class="small-p">
