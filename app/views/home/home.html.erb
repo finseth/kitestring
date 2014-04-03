@@ -32,7 +32,7 @@
         <div class="span6 offset3">
           <%= form_tag('/checkpoint', { 'method' => 'post', 'class' => 'no-vertical-margin', 'data-ks-form' => 'checkpointForm' }) do %>
             <h2 class="no-top-margin" data-ng-show="active"><i class="fa fa-pencil-square-o"></i> Update your trip</h2>
-            <h2 class="no-top-margin" data-ng-hide="active"><i class="fa fa-pencil-square-o"></i> Taking a walk?</h2>
+            <h2 class="no-top-margin" data-ng-hide="active"><i class="fa fa-camera-retro"></i> Taking a walk?</h2>
             <p>When should we check up on you? <span id="interval">{{ interval }}</span></p>
             <div class="small-p">
               <input name="time" data-ng-model="time" type="time" />
