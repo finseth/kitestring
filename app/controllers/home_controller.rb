@@ -2,7 +2,8 @@ include ApplicationHelper
 require 'json'
 
 class HomeController < ApplicationController
-  public_actions = [:index, :terms, :privacy, :faq, :sign_up_validate, :sign_up, :new_user, :sign_in, :update, :twilio]
+  # note -- :home is here only because it does its own authentication
+  public_actions = [:index, :home, :terms, :privacy, :faq, :sign_up_validate, :sign_up, :new_user, :sign_in, :update, :twilio]
   before_filter :require_login, :except => public_actions
   skip_before_filter :verify_authenticity_token, :only => [:update, :twilio]
   before_filter :use_https, :except => [:update, :twilio]
@@ -132,6 +133,15 @@ class HomeController < ApplicationController
   end
 
   def home
+    if session[:authenticated_user_id] == nil
+      return redirect_to '/'
+    end
+    begin
+      @user = User.find(session[:authenticated_user_id].to_i)
+    rescue
+      session[:authenticated_user_id] = nil
+      return redirect_to '/'
+    end
   end
 
   def new_contact
