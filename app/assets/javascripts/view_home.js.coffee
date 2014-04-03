@@ -237,8 +237,48 @@ view_home.controller('HomeController', ['$scope', 'ajax', 'notice', ($scope, aja
 
   # account
 
-  $scope.deleteAccount = (event) ->
-    notice('We&rsquo;re sad to see you go! Click <a href="/delete_account" ks-post-anchor>here</a> to delete your account.')
+  $scope.name = window.user_name
+  $scope.name_update = $scope.name
+  $scope.name_locked = true
+
+  $scope.startUpdateName = (event) ->
     event.preventDefault()
     event.stopPropagation()
+    $scope.name_locked = false
+    $scope.name_update = $scope.name
+    setTimeout((() -> $("#update-name-input").focus()), 1)
+
+  $scope.cancelUpdateName = (event) ->
+    event.preventDefault()
+    event.stopPropagation()
+    $scope.name_locked = true
+
+  $scope.updateName = (data, textStatus, jqXHR) ->
+    $scope.name_locked = true
+    $scope.name = data.name
+
+  $scope.password_update = ''
+  $scope.confirm_password_update = ''
+  $scope.password_locked = true
+
+  $scope.startUpdatePassword = (event) ->
+    event.preventDefault()
+    event.stopPropagation()
+    $scope.password_locked = false
+    $scope.password_update = ''
+    $scope.confirm_password_update = ''
+    setTimeout((() -> $("#update-password-input").focus()), 1)
+
+  $scope.cancelUpdatePassword = (event) ->
+    event.preventDefault()
+    event.stopPropagation()
+    $scope.password_locked = true
+
+  $scope.updatePassword = (data, textStatus, jqXHR) ->
+    $scope.password_locked = true
+
+  $scope.deleteAccount = (event) ->
+    event.preventDefault()
+    event.stopPropagation()
+    notice('We&rsquo;re sad to see you go! Click <a href="/delete_account" ks-post-anchor>here</a> to delete your account.')
 ])

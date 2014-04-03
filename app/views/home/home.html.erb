@@ -110,8 +110,32 @@
           <i class="fa fa-home"></i>
           Account
         </h2>
-        <div class="small-p"><i class="fa fa-lightbulb-o fa-fw"></i> Full name: <strong><%= @user.name -%></strong></div>
+        <div class="small-p"><i class="fa fa-lightbulb-o fa-fw"></i> Full name:
+          <span data-ng-show="name_locked">
+            <a href="#" data-ng-click="startUpdateName($event)">{{ name }}</a>
+          </span>
+          <span data-ng-hide="name_locked">
+            <%= form_tag('/update_name', { 'method' => 'post', 'class' => 'inline', 'data-ks-form' => 'updateName' }) do %>
+              <input id="update-name-input" name="name" data-ng-model="name_update" placeholder="Full name" type="text" />
+              <input type="submit" class="button" value="Update" />
+              <a href="#" class="button" data-ng-click="cancelUpdateName($event)">Cancel</a>
+            <% end %>
+          <span>
+        </div>
         <div class="small-p"><i class="fa fa-mobile fa-fw"></i> Phone number: <strong><%= @user.phone -%></strong></div>
+        <div class="small-p" data-ng-show="password_locked">
+          <a href="#" data-ng-click="startUpdatePassword($event)">Update password</a>
+        </div>
+        <%= form_tag('/update_password', { 'method' => 'post', 'data-ng-hide' => 'password_locked', 'data-ks-form' => 'updatePassword' }) do %>
+          <div class="small-p">
+            <input id="update-password-input" name="password" placeholder="Password" type="password" />
+            <input name="confirm_password" placeholder="Confirm password" type="password" />
+          </div>
+          <div class="small-p">
+            <input type="submit" class="button" value="Update" />
+            <a href="#" class="button" data-ng-click="cancelUpdatePassword($event)">Cancel</a>
+          </div>
+        <% end %>
         <div class="p"><a href="#" class="button" data-ng-click="deleteAccount($event)">Delete account</a></div>
       </div>
     </div>

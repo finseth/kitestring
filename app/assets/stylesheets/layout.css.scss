@@ -1,18 +1,5 @@
 @import 'constants';
 
-.clearfix {
-  *zoom: 1;
-  &:before,
-  &:after {
-    display: table;
-    content: "";
-    line-height: 0;
-  }
-  &:after {
-    clear: both;
-  }
-}
-
 html, body {
   margin: 0;
   padding: 0;
@@ -39,6 +26,19 @@ body {
     -moz-box-sizing:    border-box;
     box-sizing:         border-box;
     word-wrap: break-word;
+  }
+
+  .clearfix {
+    *zoom: 1;
+    &:before,
+    &:after {
+      display: table;
+      content: "";
+      line-height: 0;
+    }
+    &:after {
+      clear: both;
+    }
   }
 
   a {
@@ -80,6 +80,11 @@ body {
 
   .hidden {
     display: none;
+  }
+
+  form.inline {
+    display: inline;
+    margin: 0;
   }
 
   .slide {

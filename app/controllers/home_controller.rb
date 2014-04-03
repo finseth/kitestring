@@ -233,6 +233,32 @@ class HomeController < ApplicationController
     end
   end
 
+  def update_name
+    name = (params['name'] || '').strip
+    if name.size == 0
+      return render :json => { :success => false, :notice => 'Please enter your full name.' }
+    end
+    @user.name = name
+    @user.save
+    return render :json => { :success => true, :name => name }
+  end
+
+  def update_password
+    password = params['password'] || ''
+    confirm_password = params['confirm_password'] || ''
+    if password.size == 0
+      return render :json => { :success => false, :notice => 'Please enter a password.' }
+    end
+    if password != confirm_password
+      return render :json => { :success => false, :notice => 'Your passwords do not match.' }
+    end
+    salt = (0...50).map { ('a'..'z').to_a[rand(26)] }.join
+    @user.password_salt = salt
+    @user.password_hash = password_hash(password, salt)
+    @user.save
+    return render :json => { :success => true, :notice => 'Your password has been updated.' }
+  end
+
   def delete_account
     @user.destroy
     session[:authenticated_user_id] = nil
