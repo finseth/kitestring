@@ -143,8 +143,6 @@ view_home.controller('HomeController', ['$scope', 'ajax', 'notice', ($scope, aja
       $scope.current_date_string = getDateString($scope.current_checkpoint)
       $scope.current_interval_string = getRelativeTimeString($scope.current_checkpoint)
       if isNow($scope.current_checkpoint)
-        if !$scope.expired
-          notice('Please end your trip or update your ETA so we know you\'re safe.')
         $scope.expired = true
       else
         $scope.expired = false
